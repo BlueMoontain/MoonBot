@@ -1,0 +1,13 @@
+{
+  "pronounsMessage": {
+    "content": "Hola ! React with the color heart corresponding to your pronouns :\n\n💚 He/Him\n💛 She/Her\n💜 They/Them\n🧡 Any Pronouns\n💙 Ask Me"
+  },
+  "zodiacMessage": {
+    "content": "Hola ! Choose your zodiac sign: :\n\n♈ Aries \n♉ Taurus \n♊ Gemini\n♋ Cancer\n♌ Leo\n♍ Virgo\n♎ Libra\n♏ Scorpio\n♐ Sagittarius\n♑ Capricorn\n♒ Aquarius\n♓ Pisces"
+  },
+
+  "continentsMessage": {
+    "content": "React with the animal corresponding to your continent(s):\n\n🦁 Africa\n🐘 Asia\n🦅 Europe\n🐺 North America\n🦜 South America\n🐨 Oceania\n🐧 Antarctica"
+}
+
+}
