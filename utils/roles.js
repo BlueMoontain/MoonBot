@@ -1,7 +1,6 @@
+console.log("🚨 ROLES FILE VERSION CLEAN");
 
-// utils/roles.js
-
-// ===== Pronoms (plusieurs possibles) =====
+// ===== Pronoms =====
 const pronounsMap = {
   "💛": "She/Her",
   "💚": "He/Him",
@@ -10,7 +9,7 @@ const pronounsMap = {
   "💙": "Ask Me"
 };
 
-// ===== Zodiac (un seul possible à la fois) =====
+// ===== Zodiac =====
 const zodiacMap = {
   "♈": "Aries",
   "♉": "Taurus",
@@ -25,93 +24,203 @@ const zodiacMap = {
   "♒": "Aquarius",
   "♓": "Pisces"
 };
-// ===== Continents (plusieurs possibles) =====
+
+// ===== Continents =====
 const continentsMap = {
-  "🦁": "Africa",         // Lion pour l'Afrique
-  "🐘": "Asia",           // Éléphant pour l'Asie
-  "🦅": "North America",  // Aigle pour l'Amérique du Nord
-  "🐺": "Europe",        // Loup pour l'Europe
-  "🦜": "South America",  // Perroquet pour l'Amérique du Sud
-  "🐨": "Oceania",        // Koala pour l'Océanie
-  "🐧": "Antarctica"      // Manchot pour l'Antarctique
+  "🦁": "Africa",
+  "🐘": "Asia",
+  "🦅": "North America",
+  "🐺": "Europe",
+  "🦜": "South America",
+  "🐨": "Oceania",
+  "🐧": "Antarctica"
 };
 
-module.exports = { pronounsMap, zodiacMap, continentsMap, handlePronounsReaction, handleZodiacReaction };
-
-// ===== Pronoms =====
+// ===== Pronouns handler =====
 async function handlePronounsReaction(reaction, user, add) {
   const roleName = pronounsMap[reaction.emoji.name];
   if (!roleName) return;
 
   const member = await reaction.message.guild.members.fetch(user.id);
-  if (!member) return;
-
   const role = reaction.message.guild.roles.cache.find(r => r.name === roleName);
-  if (!role) {
-    console.warn(`⚠️ Role "${roleName}" non trouvé sur le serveur ${reaction.message.guild.name}`);
-    return;
-  }
+  if (!role) return;
 
-  try {
-    if (add) {
-      await member.roles.add(role);
-      console.log(`[LOG] ${user.tag} a ajouté le rôle pronoms ${roleName}`);
-    } else {
-      await member.roles.remove(role);
-      console.log(`[LOG] ${user.tag} a retiré le rôle pronoms ${roleName}`);
-    }
-  } catch (err) {
-    console.error(err);
-  }
+  if (add) await member.roles.add(role);
+  else await member.roles.remove(role);
 }
 
-// ===== Zodiac =====
-const zodiacLocks = new Map(); // clé = userId, valeur = booléen
+// ===== Zodiac handler =====
+const zodiacLocks = new Map();
 
 async function handleZodiacReaction(reaction, user, add) {
   const member = await reaction.message.guild.members.fetch(user.id);
-  if (!member) return;
-
   const emoji = reaction.emoji.name;
+
   const newRoleName = zodiacMap[emoji];
   if (!newRoleName) return;
 
   const newRole = reaction.message.guild.roles.cache.find(r => r.name === newRoleName);
-  if (!newRole) {
-    console.warn(`⚠️ Role zodiac "${newRoleName}" non trouvé sur le serveur ${reaction.message.guild.name}`);
-    return;
-  }
+  if (!newRole) return;
 
-  // Si déjà en train de modifier le rôle zodiac, on ignore cette réaction
   if (zodiacLocks.get(user.id)) return;
   zodiacLocks.set(user.id, true);
 
   try {
     if (add) {
-      // Retirer tous les autres rôles zodiac
       for (const key of Object.keys(zodiacMap)) {
         const oldRole = reaction.message.guild.roles.cache.find(r => r.name === zodiacMap[key]);
         if (oldRole && member.roles.cache.has(oldRole.id)) {
           await member.roles.remove(oldRole);
-          console.log(`🌓 ${user.tag} n’a plus de signe (${oldRole.name} retiré)`);
         }
       }
 
-      // Ajouter le nouveau rôle zodiac
       await member.roles.add(newRole);
-      console.log(`🌟 ${user.tag} est maintenant ${newRoleName}`);
     } else {
       if (member.roles.cache.has(newRole.id)) {
         await member.roles.remove(newRole);
-        console.log(`🌓 ${user.tag} n’a plus de signe (${newRoleName} retiré)`);
       }
     }
-  } catch (err) {
-    console.error(err);
   } finally {
     zodiacLocks.delete(user.id);
   }
 }
+
+// ===== EXPORT (propre, unique, en bas) =====
+module.exports = {
+  pronounsMap,
+  zodiacMap,
+  continentsMap,
+  handlePronounsReaction,
+  handleZodiacReaction
+};
+
+// console.log("🚨 ROLES FILE VERSION TEST");
+// // utils/roles.js
+// console.log("LOADING ROLES FILE");
+// // ===== Pronoms (plusieurs possibles) =====
+// const pronounsMap = {
+//   "💛": "She/Her",
+//   "💚": "He/Him",
+//   "💜": "They/Them",
+//   "🧡": "Any Pronouns",
+//   "💙": "Ask Me"
+// };
+
+// // ===== Zodiac (un seul possible à la fois) =====
+// const zodiacMap = {
+//   "♈": "Aries",
+//   "♉": "Taurus",
+//   "♊": "Gemini",
+//   "♋": "Cancer",
+//   "♌": "Leo",
+//   "♍": "Virgo",
+//   "♎": "Libra",
+//   "♏": "Scorpio",
+//   "♐": "Sagittarius",
+//   "♑": "Capricorn",
+//   "♒": "Aquarius",
+//   "♓": "Pisces"
+// };
+// // ===== Continents (plusieurs possibles) =====
+// const continentsMap = {
+//   "🦁": "Africa",         // Lion pour l'Afrique
+//   "🐘": "Asia",           // Éléphant pour l'Asie
+//   "🦅": "North America",  // Aigle pour l'Amérique du Nord
+//   "🐺": "Europe",        // Loup pour l'Europe
+//   "🦜": "South America",  // Perroquet pour l'Amérique du Sud
+//   "🐨": "Oceania",        // Koala pour l'Océanie
+//   "🐧": "Antarctica"      // Manchot pour l'Antarctique
+// };
+
+// // ===== Pronoms =====
+// async function handlePronounsReaction(reaction, user, add) {
+//   const roleName = pronounsMap[reaction.emoji.name];
+//   if (!roleName) return;
+
+//   const member = await reaction.message.guild.members.fetch(user.id);
+//   if (!member) return;
+
+//   const role = reaction.message.guild.roles.cache.find(r => r.name === roleName);
+//   if (!role) {
+//     console.warn(`⚠️ Role "${roleName}" non trouvé sur le serveur ${reaction.message.guild.name}`);
+//     return;
+//   }
+
+//   try {
+//     if (add) {
+//       await member.roles.add(role);
+//       console.log(`[LOG] ${user.tag} a ajouté le rôle pronoms ${roleName}`);
+//     } else {
+//       await member.roles.remove(role);
+//       console.log(`[LOG] ${user.tag} a retiré le rôle pronoms ${roleName}`);
+//     }
+//   } catch (err) {
+//     console.error(err);
+//   }
+// }
+
+// // ===== Zodiac =====
+// const zodiacLocks = new Map(); // clé = userId, valeur = booléen
+
+// async function handleZodiacReaction(reaction, user, add) {
+//   const member = await reaction.message.guild.members.fetch(user.id);
+//   if (!member) return;
+
+//   const emoji = reaction.emoji.name;
+//   const newRoleName = zodiacMap[emoji];
+//   if (!newRoleName) return;
+
+//   const newRole = reaction.message.guild.roles.cache.find(r => r.name === newRoleName);
+//   if (!newRole) {
+//     console.warn(`⚠️ Role zodiac "${newRoleName}" non trouvé sur le serveur ${reaction.message.guild.name}`);
+//     return;
+//   }
+
+//   // Si déjà en train de modifier le rôle zodiac, on ignore cette réaction
+//   if (zodiacLocks.get(user.id)) return;
+//   zodiacLocks.set(user.id, true);
+
+//   try {
+//     if (add) {
+//       // Retirer tous les autres rôles zodiac
+//       for (const key of Object.keys(zodiacMap)) {
+//         const oldRole = reaction.message.guild.roles.cache.find(r => r.name === zodiacMap[key]);
+//         if (oldRole && member.roles.cache.has(oldRole.id)) {
+//           await member.roles.remove(oldRole);
+//           console.log(`🌓 ${user.tag} n’a plus de signe (${oldRole.name} retiré)`);
+//         }
+//       }
+
+//       // Ajouter le nouveau rôle zodiac
+//       await member.roles.add(newRole);
+//       console.log(`🌟 ${user.tag} est maintenant ${newRoleName}`);
+//     } else {
+//       if (member.roles.cache.has(newRole.id)) {
+//         await member.roles.remove(newRole);
+//         console.log(`🌓 ${user.tag} n’a plus de signe (${newRoleName} retiré)`);
+//       }
+//     }
+//   } catch (err) {
+//     console.error(err);
+//   } finally {
+//     zodiacLocks.delete(user.id);
+//   }
+  
+//   // ✅ FIN DE LA FONCTION ICI
+  
+//   console.log("EXPORTING:", {
+//     pronounsMap,
+//     zodiacMap,
+//     continentsMap
+//   });
+  
+//   module.exports = {
+//     pronounsMap,
+//     zodiacMap,
+//     continentsMap,
+//     handlePronounsReaction,
+//     handleZodiacReaction
+//   };
 
 
 
@@ -164,7 +273,7 @@ async function handleZodiacReaction(reaction, user, add) {
 //   }
 // }
 
-module.exports = { pronounsMap, zodiacMap, handlePronounsReaction, handleZodiacReaction };
+// module.exports = { pronounsMap, zodiacMap, handlePronounsReaction, handleZodiacReaction };
 
 // // utils/roles.js
 // const pronounsMap = {

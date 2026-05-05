@@ -1,12 +1,14 @@
 // events/ready.js
-const { pronounsMessage, zodiacMessage } = require("../config/messages.json");
-const { pronounsMap, zodiacMap } = require("../utils/roles");
+const { pronounsMessage, zodiacMessage, continentsMessage } = require("../config/messages.json");
+const { pronounsMap, zodiacMap, continentsMap } = require("../utils/roles");
 
 module.exports = {
   name: "clientReady",
   once: true,
   async execute(client) {
     console.log(`✅ Bot connecté en tant que ${client.user.tag}`);
+    console.log("DEBUG continentsMap:", continentsMap);
+    console.log("DEBUG roles import:", require("../utils/roles"));
 
     for (const guild of client.guilds.cache.values()) {
       const channel = guild.channels.cache.find(
@@ -31,7 +33,7 @@ module.exports = {
           await pronounsMsg.react(emoji);
         }
       }
-
+      console.log("MESSAGES TROUVÉS:", messages.map(m => m.content));
       // ===== Zodiac =====
       let zodiacMsg = messages.find(m => m.content === zodiacMessage.content);
       if (!zodiacMsg) {
@@ -48,17 +50,52 @@ module.exports = {
         }
       }
       // ===== Continents =====
-    let continentsMsg = channel.messages.cache.find(m => m.content === continentsMessage.content);
-    if (!continentsMsg) continentsMsg = await channel.send({ content: continentsMessage.content });
+let continentsMsg = messages.find(m => m.content === continentsMessage.content);
 
-    for (const emoji of Object.keys(continentsMap)) {
-    const roleExists = guild.roles.cache.find(r => r.name === continentsMap[emoji]);
-    if (!roleExists) {
+if (!continentsMsg) {
+  continentsMsg = await channel.send({ content: continentsMessage.content });
+  console.log(`[LOG] Message continents créé dans ${guild.name}`);
+}
+
+await continentsMsg.fetch();
+
+for (const emoji of Object.keys(continentsMap)) {
+  const roleExists = guild.roles.cache.find(r => r.name === continentsMap[emoji]);
+  if (!roleExists) {
     console.warn(`⚠️ Le rôle ${continentsMap[emoji]} n'existe pas dans ${guild.name}`);
     continue;
   }
-  if (!continentsMsg.reactions.cache.has(emoji)) await continentsMsg.react(emoji);
+
+  if (!continentsMsg.reactions.cache.has(emoji)) {
+    await continentsMsg.react(emoji);
+  }
 }
+      // if (!continentsMap) {
+      //   console.warn("⚠️ continentsMap undefined — skipping continents setup");
+      // } else {
+      //   for (const emoji of Object.keys(continentsMap)) {
+      //     const roleExists = guild.roles.cache.find(r => r.name === continentsMap[emoji]);
+      //     if (!roleExists) {
+      //       console.warn(`⚠️ Le rôle ${continentsMap[emoji]} n'existe pas dans ${guild.name}`);
+      //       continue;
+      //     }
+      //     if (!continentsMsg.reactions.cache.has(emoji)) {
+      //       await continentsMsg.react(emoji);
+      //     }
+      //   }
+      // }
+//       // ===== Continents =====
+//     let continentsMsg = channel.messages.cache.find(m => m.content === continentsMessage.content);
+//     if (!continentsMsg) continentsMsg = await channel.send({ content: continentsMessage.content });
+
+//     for (const emoji of Object.keys(continentsMap)) {
+//     const roleExists = guild.roles.cache.find(r => r.name === continentsMap[emoji]);
+//     if (!roleExists) {
+//     console.warn(`⚠️ Le rôle ${continentsMap[emoji]} n'existe pas dans ${guild.name}`);
+//     continue;
+//   }
+//   if (!continentsMsg.reactions.cache.has(emoji)) await continentsMsg.react(emoji);
+// }
 
     }
   },
