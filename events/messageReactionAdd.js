@@ -10,6 +10,7 @@ module.exports = {
 
       const emoji = reaction.emoji.name;
       const member = await reaction.message.guild.members.fetch(user.id);
+      await member.fetch(true);
 
       // ===== Pronouns =====
       if (pronounsMap[emoji]) {
@@ -65,8 +66,13 @@ if (continentsMap[emoji]) {
         // --- Retirer toutes les autres réactions zodiac de cet utilisateur ---
         const zodiacReactions = reaction.message.reactions.cache.filter(r => zodiacMap[r.emoji.name]);
         for (const r of zodiacReactions.values()) {
-          if (r.emoji.name !== emoji && r.users.cache.has(user.id)) {
-            await r.users.remove(user.id);
+          if (r.emoji.name !== emoji) {
+        
+            await r.users.fetch();
+        
+            if (r.users.cache.has(user.id)) {
+              await r.users.remove(user.id);
+            }
           }
         }
 
