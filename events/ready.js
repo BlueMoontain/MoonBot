@@ -10,7 +10,7 @@ const {
   zodiacMap,
   continentsMap,
 } = require("../utils/roles");
-
+const { startReminderScheduler } = require("../scheduler/reminderScheduler");
 const { buildReminderMenu } = require("../utils/ReminderMenu");
 
 module.exports = {
@@ -20,6 +20,7 @@ module.exports = {
     console.log(`✅ Bot connecté en tant que ${client.user.tag}`);
     console.log("DEBUG continentsMap:", continentsMap);
     console.log("DEBUG roles import:", require("../utils/roles"));
+    startReminderScheduler(client);
 
     for (const guild of client.guilds.cache.values()) {
       const channel = guild.channels.cache.find(

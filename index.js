@@ -1,6 +1,7 @@
 require("dotenv").config();
 const { Client, GatewayIntentBits, Partials, Collection, Events } = require("discord.js");
 const fs = require("fs");
+const { startReminderScheduler } = require("./scheduler/reminderScheduler");
 const path = require("path");
 
 // ==== Création du client ====
