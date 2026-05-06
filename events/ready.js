@@ -1,6 +1,17 @@
 // events/ready.js
-const { pronounsMessage, zodiacMessage, continentsMessage } = require("../config/messages.json");
-const { pronounsMap, zodiacMap, continentsMap } = require("../utils/roles");
+const {
+  pronounsMessage,
+  zodiacMessage,
+  continentsMessage,
+} = require("../config/messages.json");
+
+const {
+  pronounsMap,
+  zodiacMap,
+  continentsMap,
+} = require("../utils/roles");
+
+const { buildReminderMenu } = require("../utils/ReminderMenu");
 
 module.exports = {
   name: "clientReady",
@@ -70,34 +81,36 @@ for (const emoji of Object.keys(continentsMap)) {
     await continentsMsg.react(emoji);
   }
 }
-      // if (!continentsMap) {
-      //   console.warn("⚠️ continentsMap undefined — skipping continents setup");
-      // } else {
-      //   for (const emoji of Object.keys(continentsMap)) {
-      //     const roleExists = guild.roles.cache.find(r => r.name === continentsMap[emoji]);
-      //     if (!roleExists) {
-      //       console.warn(`⚠️ Le rôle ${continentsMap[emoji]} n'existe pas dans ${guild.name}`);
-      //       continue;
-      //     }
-      //     if (!continentsMsg.reactions.cache.has(emoji)) {
-      //       await continentsMsg.react(emoji);
-      //     }
-      //   }
-      // }
-//       // ===== Continents =====
-//     let continentsMsg = channel.messages.cache.find(m => m.content === continentsMessage.content);
-//     if (!continentsMsg) continentsMsg = await channel.send({ content: continentsMessage.content });
+// ===== Reminder Channel =====
+const reminderChannel = guild.channels.cache.find(
+  c => c.name === "salon-reminders" && c.isTextBased()
+);
 
-//     for (const emoji of Object.keys(continentsMap)) {
-//     const roleExists = guild.roles.cache.find(r => r.name === continentsMap[emoji]);
-//     if (!roleExists) {
-//     console.warn(`⚠️ Le rôle ${continentsMap[emoji]} n'existe pas dans ${guild.name}`);
-//     continue;
-//   }
-//   if (!continentsMsg.reactions.cache.has(emoji)) await continentsMsg.react(emoji);
-// }
+if (!reminderChannel) {
+  console.warn(`⚠️ Pas de salon #salon-reminders trouvé dans ${guild.name}`);
+  continue;
+}
 
+const reminderMessages = await reminderChannel.messages.fetch({ limit: 20 });
+
+let reminderMsg = reminderMessages.find(
+  m => m.author.id === client.user.id &&
+       m.components.length > 0
+);
+
+if (!reminderMsg) {
+
+  const reminderMenu = buildReminderMenu();
+
+  reminderMsg = await reminderChannel.send({
+    content: "⏰ Select your active reminder times (UTC):",
+    components: [reminderMenu]
+  });
+
+  console.log(`[LOG] Message reminders créé dans ${guild.name}`);
+}
     }
+
   },
 };
 

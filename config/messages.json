@@ -8,6 +8,10 @@
 
   "continentsMessage": {
     "content": "React with the animal corresponding to your continent(s):\n\n🦁 Africa\n🐘 Asia\n🦅 Europe\n🐺 North America\n🦜 South America\n🐨 Oceania\n🐧 Antarctica"
+},
+
+  "remindersMessage": {
+  "content": "⏰ Select your active reminder times (UTC):\n\n00:00 UTC\n02:00 UTC\n04:00 UTC\n06:00 UTC\n08:00 UTC\n10:00 UTC\n12:00 UTC\n14:00 UTC\n16:00 UTC\n18:00 UTC\n20:00 UTC\n22:00 UTC"
 }
 
 }

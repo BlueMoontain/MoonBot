@@ -36,6 +36,21 @@ const continentsMap = {
   "🐧": "Antarctica"
 };
 
+const remindersMap = {
+  "00:00": "Reminder 00:00 UTC",
+  "02:00": "Reminder 02:00 UTC",
+  "04:00": "Reminder 04:00 UTC",
+  "06:00": "Reminder 06:00 UTC",
+  "08:00": "Reminder 08:00 UTC",
+  "10:00": "Reminder 10:00 UTC",
+  "12:00": "Reminder 12:00 UTC",
+  "14:00": "Reminder 14:00 UTC",
+  "16:00": "Reminder 16:00 UTC",
+  "18:00": "Reminder 18:00 UTC",
+  "20:00": "Reminder 20:00 UTC",
+  "22:00": "Reminder 22:00 UTC"
+};
+
 // ===== Pronouns handler =====
 async function handlePronounsReaction(reaction, user, add) {
   const roleName = pronounsMap[reaction.emoji.name];
@@ -90,6 +105,7 @@ module.exports = {
   pronounsMap,
   zodiacMap,
   continentsMap,
+  remindersMap,
   handlePronounsReaction,
   handleZodiacReaction
 };
