@@ -1,5 +1,4 @@
-
-const { pronounsMap, zodiacMap } = require("../utils/roles");
+const { pronounsMap, zodiacMap, continentsMap } = require("../utils/roles");
 
 module.exports = {
   name: "messageReactionRemove",
@@ -23,7 +22,18 @@ module.exports = {
         }
         return;
       }
+// ===== Continents =====
+if (continentsMap[emoji]) {
+  const roleName = continentsMap[emoji];
+  const role = reaction.message.guild.roles.cache.find(r => r.name === roleName);
 
+  if (role && member.roles.cache.has(role.id)) {
+    await member.roles.remove(role);
+    console.log(`🌍 Retiré ${roleName} de ${member.user.tag}`);
+  }
+
+  return;
+}
       // ===== Zodiac =====
       if (zodiacMap[emoji]) {
         const roleName = zodiacMap[emoji];

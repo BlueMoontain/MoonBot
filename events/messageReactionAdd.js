@@ -1,5 +1,4 @@
-
-const { pronounsMap, zodiacMap } = require("../utils/roles");
+const { pronounsMap, zodiacMap, continentsMap } = require("../utils/roles");
 
 module.exports = {
   name: "messageReactionAdd",
@@ -28,6 +27,23 @@ module.exports = {
         }
         return;
       }
+      // ===== Continents =====
+if (continentsMap[emoji]) {
+  const roleName = continentsMap[emoji];
+  const role = reaction.message.guild.roles.cache.find(r => r.name === roleName);
+
+  if (!role) {
+    console.warn(`⚠️ Rôle ${roleName} introuvable pour ${emoji}`);
+    return;
+  }
+
+  if (!member.roles.cache.has(role.id)) {
+    await member.roles.add(role);
+    console.log(`🌍 Ajouté ${roleName} à ${member.user.tag}`);
+  }
+
+  return;
+}
 
       // ===== Zodiac =====
       if (zodiacMap[emoji]) {
@@ -62,6 +78,7 @@ module.exports = {
       console.error("❌ Erreur MessageReactionAdd:", err);
     }
   },
+  
 };
 
 
