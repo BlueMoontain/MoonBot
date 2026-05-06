@@ -82,27 +82,19 @@ for (const emoji of Object.keys(continentsMap)) {
   }
 }
 // ===== Reminder Channel =====
-const reminderChannel = guild.channels.cache.find(
-  c => c.name === "salon-reminders" && c.isTextBased()
-);
-
-if (!reminderChannel) {
-  console.warn(`⚠️ Pas de salon #salon-reminders trouvé dans ${guild.name}`);
-  continue;
-}
-
-const reminderMessages = await reminderChannel.messages.fetch({ limit: 20 });
+const reminderMessages = await channel.messages.fetch({ limit: 20 });
 
 let reminderMsg = reminderMessages.find(
-  m => m.author.id === client.user.id &&
-       m.components.length > 0
+  m =>
+    m.author.id === client.user.id &&
+    m.components.length > 0
 );
 
 if (!reminderMsg) {
 
   const reminderMenu = buildReminderMenu();
 
-  reminderMsg = await reminderChannel.send({
+  reminderMsg = await channel.send({
     content: "⏰ Select your active reminder times (UTC):",
     components: [reminderMenu]
   });

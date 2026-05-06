@@ -1,16 +1,24 @@
-const { handleButton } = require("../utils/roles");
+const {
+  handleButton,
+  handleReminderSelect
+} = require("../utils/roles");
 
 module.exports = {
   name: "interactionCreate",
-  execute: (client, interaction) => {
-    if (!interaction.isButton()) return;
-    handleButton(interaction);
+
+  async execute(interaction) {
+
+    // ===== Buttons =====
+    if (interaction.isButton()) {
+      return handleButton(interaction);
+    }
+
+    // ===== Reminder Dropdown =====
+    if (
+      interaction.isStringSelectMenu() &&
+      interaction.customId === "reminder-select"
+    ) {
+      return handleReminderSelect(interaction);
+    }
   }
 };
-
-// const { handleButton } = require("../utils/roles");
-
-// module.exports = {
-//   name: "interactionCreate",
-//   async execute(client, interaction) { if (!interaction.isButton()) return; handleButton(interaction); }
-// };

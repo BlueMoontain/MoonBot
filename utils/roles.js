@@ -37,18 +37,18 @@ const continentsMap = {
 };
 
 const remindersMap = {
-  "00:00": "Reminder 00:00 UTC",
-  "02:00": "Reminder 02:00 UTC",
-  "04:00": "Reminder 04:00 UTC",
-  "06:00": "Reminder 06:00 UTC",
-  "08:00": "Reminder 08:00 UTC",
-  "10:00": "Reminder 10:00 UTC",
-  "12:00": "Reminder 12:00 UTC",
-  "14:00": "Reminder 14:00 UTC",
-  "16:00": "Reminder 16:00 UTC",
-  "18:00": "Reminder 18:00 UTC",
-  "20:00": "Reminder 20:00 UTC",
-  "22:00": "Reminder 22:00 UTC"
+  "12 AM": "Reminder 12 AM UTC",
+  "2 AM": "Reminder 2 AM UTC",
+  "4 AM": "Reminder 4 AM UTC",
+  "6 AM": "Reminder 6 AM UTC",
+  "8 AM": "Reminder 8 AM UTC",
+  "10 AM": "Reminder 10 AM UTC",
+  "12 PM": "Reminder 12 PM UTC",
+  "2 PM": "Reminder 2 PM UTC",
+  "4 PM": "Reminder 4 PM UTC",
+  "6 PM": "Reminder 6 PM UTC",
+  "8 PM": "Reminder 8 PM UTC",
+  "10 PM": "Reminder 10 PM UTC",
 };
 
 // ===== Pronouns handler =====
@@ -99,7 +99,71 @@ async function handleZodiacReaction(reaction, user, add) {
     zodiacLocks.delete(user.id);
   }
 }
+// ===== Reminder Dropdown =====
+async function handleReminderSelect(interaction) {
 
+  const member = interaction.member;
+  const guild = interaction.guild;
+
+  if (!member || !guild) return;
+
+  const selectedTimes = interaction.values;
+
+  try {
+
+    // ===== Supprimer anciens rôles reminders =====
+    for (const roleName of Object.values(remindersMap)) {
+
+      const role = guild.roles.cache.find(
+        r => r.name === roleName
+      );
+
+      if (role && member.roles.cache.has(role.id)) {
+        await member.roles.remove(role);
+      }
+    }
+
+    // ===== Ajouter nouveaux rôles reminders =====
+    for (const time of selectedTimes) {
+
+      const roleName = remindersMap[time];
+
+      const role = guild.roles.cache.find(
+        r => r.name === roleName
+      );
+
+      if (!role) {
+        console.warn(`⚠️ Rôle reminder introuvable : ${roleName}`);
+        continue;
+      }
+      console.log("ADDING ROLE:", role.name);
+      console.log("TO MEMBER:", member.user.tag);
+      await member.roles.add(role);
+    }
+
+    // ===== Confirmation utilisateur =====
+    const formatted =
+      selectedTimes.length > 0
+        ? selectedTimes.map(t => `${t} UTC`).join(", ")
+        : "None";
+
+    await interaction.reply({
+      content: `✅ Active reminders: ${formatted}`,
+      ephemeral: true
+    });
+
+  } catch (err) {
+
+    console.error("❌ Reminder dropdown error:", err);
+
+    if (!interaction.replied) {
+      await interaction.reply({
+        content: "❌ Error while updating reminders.",
+        ephemeral: true
+      });
+    }
+  }
+}
 // ===== EXPORT (propre, unique, en bas) =====
 module.exports = {
   pronounsMap,
@@ -107,7 +171,8 @@ module.exports = {
   continentsMap,
   remindersMap,
   handlePronounsReaction,
-  handleZodiacReaction
+  handleZodiacReaction,
+  handleReminderSelect
 };
 
 // console.log("🚨 ROLES FILE VERSION TEST");

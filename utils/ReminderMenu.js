@@ -6,19 +6,19 @@ const {
   function buildReminderMenu() {
   
     const reminderOptions = [
-      { label: "00:00 UTC", value: "00:00" },
-      { label: "02:00 UTC", value: "02:00" },
-      { label: "04:00 UTC", value: "04:00" },
-      { label: "06:00 UTC", value: "06:00" },
-      { label: "08:00 UTC", value: "08:00" },
-      { label: "10:00 UTC", value: "10:00" },
-      { label: "12:00 UTC", value: "12:00" },
-      { label: "14:00 UTC", value: "14:00" },
-      { label: "16:00 UTC", value: "16:00" },
-      { label: "18:00 UTC", value: "18:00" },
-      { label: "20:00 UTC", value: "20:00" },
-      { label: "22:00 UTC", value: "22:00" }
-    ];
+        { label: "12 AM", value: "12 AM" },
+        { label: "2 AM", value: "2 AM" },
+        { label: "4 AM", value: "4 AM" },
+        { label: "6 AM", value: "6 AM" },
+        { label: "8 AM", value: "8 AM" },
+        { label: "10 AM", value: "10 AM" },
+        { label: "12 PM", value: "12 PM" },
+        { label: "2 PM", value: "2 PM" },
+        { label: "4 PM", value: "4 PM" },
+        { label: "6 PM", value: "6 PM" },
+        { label: "8 PM", value: "8 PM" },
+        { label: "10 PM", value: "10 PM" }
+      ];
   
     const menu = new StringSelectMenuBuilder()
       .setCustomId("reminder-select")
