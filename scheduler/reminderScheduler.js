@@ -24,12 +24,13 @@ function startReminderScheduler(client) {
 
       if (!roleName) return;
 
-      console.log(`⏰ Checking reminders for ${formattedHour}`);
+      // console.log(`⏰ Checking reminders for ${formattedHour}`);
 
       if (lastTriggeredHour === formattedHour) {
         return;
       }
-
+      console.log(`⏰ Checking reminders for ${formattedHour}`);
+      lastTriggeredHour = formattedHour;
       for (const guild of client.guilds.cache.values()) {
 
         const role = guild.roles.cache.find(
@@ -57,7 +58,7 @@ function startReminderScheduler(client) {
           continue;
         }
 
-        lastTriggeredHour = formattedHour;
+        // lastTriggeredHour = formattedHour;
 
         await reminderChannel.send({
           content: `⏰ <@&${role.id}> Reminder time!`

@@ -19,21 +19,56 @@ module.exports = {
         .split(/ +/);
   
       const commandName = args.shift().toLowerCase();
-  
-      // Find command
       const command = client.commands.get(commandName);
-  
-      if (!command) return;
-  
+      const {
+        loadCustomCommands
+      } = require("../utils/customCommands");
+      
       try {
-  
-        await command.execute(message, args);
-  
+      
+        // ===== Native JS Commands =====
+        if (command) {
+      
+          await command.execute(message, args);
+      
+          return;
+        }
+      
+        // ===== Dynamic Custom Commands =====
+        const customCommands = loadCustomCommands();
+      
+        const customResponse = customCommands[commandName];
+      
+        if (customResponse) {
+      
+          await message.reply(customResponse);
+      
+          return;
+        }
+      
       } catch (err) {
-  
-        console.error(`❌ Error executing command ${commandName}:`, err);
-  
+      
+        console.error(
+          `❌ Error executing command ${commandName}:`,
+          err
+        );
+      
         message.reply("❌ Error while executing command.");
       }
+    //   // Find command
+    //   const command = client.commands.get(commandName);
+  
+    //   if (!command) return;
+  
+    //   try {
+  
+    //     await command.execute(message, args);
+  
+    //   } catch (err) {
+  
+    //     console.error(`❌ Error executing command ${commandName}:`, err);
+  
+    //     message.reply("❌ Error while executing command.");
+    //   }
     }
   };
