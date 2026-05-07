@@ -1,4 +1,7 @@
 const { remindersMap } = require("../utils/roles");
+const {
+  isRemindersEnabled
+} = require("../utils/reminderState");
 
 let lastTriggeredHour = null;
 
@@ -9,16 +12,19 @@ function startReminderScheduler(client) {
   setInterval(async () => {
 
     try {
+      if (!isRemindersEnabled()) {
+        return;
+      }
 
       const now = new Date();
 
       const utcHour = now.getUTCHours();
 
       // // ===== DEBUG =====
-      // const formattedHour = "2 PM";
+      const formattedHour = "2 PM";
 
       // ===== PROD =====
-      const formattedHour = formatHour(utcHour);
+      // const formattedHour = formatHour(utcHour);
 
       const roleName = remindersMap[formattedHour];
 
