@@ -1,5 +1,7 @@
 console.log("🚨 ROLES FILE VERSION CLEAN");
-
+// const {
+//   resetReminderCache
+// } = require("../scheduler/reminderScheduler");
 // ===== Pronoms =====
 const pronounsMap = {
   "💛": "She/Her",
@@ -102,7 +104,8 @@ async function handleZodiacReaction(reaction, user, add) {
 // ===== Reminder Dropdown =====
 async function handleReminderSelect(interaction) {
 
-  const member = interaction.member;
+  // const member = interaction.member;
+  const member = await interaction.guild.members.fetch(interaction.user.id);
   const guild = interaction.guild;
 
   if (!member || !guild) return;
@@ -136,8 +139,6 @@ async function handleReminderSelect(interaction) {
         console.warn(`⚠️ Rôle reminder introuvable : ${roleName}`);
         continue;
       }
-      console.log("ADDING ROLE:", role.name);
-      console.log("TO MEMBER:", member.user.tag);
       await member.roles.add(role);
     }
 
@@ -164,6 +165,45 @@ async function handleReminderSelect(interaction) {
     }
   }
 }
+
+// ===== Clear Reminders =====
+async function handleClearReminders(interaction) {
+
+  const member = interaction.member;
+  const guild = interaction.guild;
+
+  if (!member || !guild) return;
+
+  try {
+
+    for (const roleName of Object.values(remindersMap)) {
+
+      const role = guild.roles.cache.find(
+        r => r.name === roleName
+      );
+
+      if (role && member.roles.cache.has(role.id)) {
+        await member.roles.remove(role);
+      }
+    }
+
+    await interaction.reply({
+      content: "✅ All reminders cleared.",
+      ephemeral: true
+    });
+
+  } catch (err) {
+
+    console.error("❌ Clear reminders error:", err);
+
+    if (!interaction.replied) {
+      await interaction.reply({
+        content: "❌ Error while clearing reminders.",
+        ephemeral: true
+      });
+    }
+  }
+}
 // ===== EXPORT (propre, unique, en bas) =====
 module.exports = {
   pronounsMap,
@@ -172,7 +212,8 @@ module.exports = {
   remindersMap,
   handlePronounsReaction,
   handleZodiacReaction,
-  handleReminderSelect
+  handleReminderSelect,
+  handleClearReminders
 };
 
 // console.log("🚨 ROLES FILE VERSION TEST");

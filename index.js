@@ -11,6 +11,7 @@ const client = new Client({
     GatewayIntentBits.GuildMessages,
     GatewayIntentBits.MessageContent,
     GatewayIntentBits.GuildMessageReactions,
+    GatewayIntentBits.GuildMembers
   ],
   partials: [Partials.Message, Partials.Channel, Partials.Reaction],
 });
@@ -40,16 +41,6 @@ if (fs.existsSync(commandsPath)) {
     client.commands.set(command.name, command);
   }
 }
-
-// // Chargement des commandes (si tu en as)
-// const commandsPath = path.join(__dirname, "commands");
-// if (fs.existsSync(commandsPath)) {
-//   fs.readdirSync(commandsPath).forEach(file => {
-//     if (!file.endsWith(".js")) return;
-//     const command = require(`./commands/${file}`);
-//     client.commands.set(command.data.name, command);
-//   });
-// }
 
 // ==== Login ====
 client.login(process.env.BOT_TOKEN)

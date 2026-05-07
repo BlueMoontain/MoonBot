@@ -1,45 +1,74 @@
 const { remindersMap } = require("../utils/roles");
 
+let lastTriggeredHour = null;
+
 function startReminderScheduler(client) {
 
   console.log("⏰ Reminder scheduler started");
 
   setInterval(async () => {
-    console.log("⏰ Scheduler tick");
 
-    const now = new Date();
+    try {
 
-    const utcHour = now.getUTCHours();
+      const now = new Date();
 
-   
-    const formattedHour = formatHour(utcHour);
+      const utcHour = now.getUTCHours();
 
-    const roleName = remindersMap[formattedHour];
+      // // ===== DEBUG =====
+      // const formattedHour = "2 PM";
 
-    if (!roleName) return;
+      // ===== PROD =====
+      const formattedHour = formatHour(utcHour);
 
-    console.log(`⏰ Checking reminders for ${formattedHour}`);
+      const roleName = remindersMap[formattedHour];
 
-    for (const guild of client.guilds.cache.values()) {
+      if (!roleName) return;
 
-      const role = guild.roles.cache.find(
-        
-        r => r.name === roleName
-      );
+      console.log(`⏰ Checking reminders for ${formattedHour}`);
 
-      if (!role) continue;
+      if (lastTriggeredHour === formattedHour) {
+        return;
+      }
 
-      const reminderChannel = guild.channels.cache.find(
-        c => c.name === "général" && c.isTextBased()
-      );
+      for (const guild of client.guilds.cache.values()) {
 
-      if (!reminderChannel) continue;
+        const role = guild.roles.cache.find(
+          r => r.name === roleName
+        );
 
-      await reminderChannel.send({
-        content: `⏰ <@&${role.id}> Reminder time!`
-      });
+        if (!role) continue;
 
-      console.log(`📢 Reminder sent for ${roleName}`);
+        const members = await guild.members.fetch();
+
+        const membersWithRole = members.filter(member =>
+          member.roles.cache.has(role.id)
+        );
+
+        if (membersWithRole.size === 0) {
+          continue;
+        }
+
+        const reminderChannel = guild.channels.cache.find(
+          c => c.name === "général" && c.isTextBased()
+        );
+
+        if (!reminderChannel) {
+          console.log("❌ Reminder channel not found");
+          continue;
+        }
+
+        lastTriggeredHour = formattedHour;
+
+        await reminderChannel.send({
+          content: `⏰ <@&${role.id}> Reminder time!`
+        });
+
+        console.log(`📢 Reminder sent for ${roleName}`);
+      }
+
+    } catch (err) {
+
+      console.error("❌ Reminder scheduler error:", err);
     }
 
   }, 60 * 1000);
@@ -48,8 +77,14 @@ function startReminderScheduler(client) {
 function formatHour(hour) {
 
   if (hour === 0) return "12 AM";
-  if (hour < 12) return `${hour} AM`;
-  if (hour === 12) return "12 PM";
+
+  if (hour < 12) {
+    return `${hour} AM`;
+  }
+
+  if (hour === 12) {
+    return "12 PM";
+  }
 
   return `${hour - 12} PM`;
 }

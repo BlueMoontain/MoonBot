@@ -18,9 +18,12 @@ module.exports = {
   once: true,
   async execute(client) {
     console.log(`✅ Bot connecté en tant que ${client.user.tag}`);
+    setTimeout(() => {
+      startReminderScheduler(client);
+    }, 10000);
     console.log("DEBUG continentsMap:", continentsMap);
     console.log("DEBUG roles import:", require("../utils/roles"));
-    startReminderScheduler(client);
+    
 
     for (const guild of client.guilds.cache.values()) {
       const channel = guild.channels.cache.find(
@@ -97,7 +100,7 @@ if (!reminderMsg) {
 
   reminderMsg = await channel.send({
     content: "⏰ Select your active reminder times (UTC):",
-    components: [reminderMenu]
+    components: reminderMenu
   });
 
   console.log(`[LOG] Message reminders créé dans ${guild.name}`);

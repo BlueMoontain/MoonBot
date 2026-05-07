@@ -1,6 +1,7 @@
 const {
   handleButton,
-  handleReminderSelect
+  handleReminderSelect,
+  handleClearReminders
 } = require("../utils/roles");
 
 module.exports = {
@@ -10,6 +11,12 @@ module.exports = {
 
     // ===== Buttons =====
     if (interaction.isButton()) {
+
+      // Clear reminders
+      if (interaction.customId === "clear-reminders") {
+        return handleClearReminders(interaction);
+      }
+
       return handleButton(interaction);
     }
 
