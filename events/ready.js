@@ -18,11 +18,8 @@ module.exports = {
   once: true,
   async execute(client) {
     console.log(`✅ Bot connecté en tant que ${client.user.tag}`);
-    setTimeout(() => {
+    console.log("🚀 Starting reminder scheduler...");
       startReminderScheduler(client);
-    }, 10000);
-    console.log("DEBUG continentsMap:", continentsMap);
-    console.log("DEBUG roles import:", require("../utils/roles"));
     
 
     for (const guild of client.guilds.cache.values()) {
@@ -48,7 +45,6 @@ module.exports = {
           await pronounsMsg.react(emoji);
         }
       }
-      console.log("MESSAGES TROUVÉS:", messages.map(m => m.content));
       // ===== Zodiac =====
       let zodiacMsg = messages.find(m => m.content === zodiacMessage.content);
       if (!zodiacMsg) {

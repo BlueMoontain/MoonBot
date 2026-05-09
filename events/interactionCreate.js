@@ -4,21 +4,22 @@ const {
   handleClearReminders
 } = require("../utils/roles");
 
+
 module.exports = {
   name: "interactionCreate",
 
+  
   async execute(interaction) {
-
+console.log("📥 Interaction reçue :", interaction.customId);
     // ===== Buttons =====
-    if (interaction.isButton()) {
+if (interaction.isButton()) {
 
-      // Clear reminders
-      if (interaction.customId === "clear-reminders") {
-        return handleClearReminders(interaction);
-      }
+  if (interaction.customId === "clear-reminders") {
+    return handleClearReminders(interaction);
+  }
 
-      return handleButton(interaction);
-    }
+  return;
+}
 
     // ===== Reminder Dropdown =====
     if (

@@ -21,10 +21,10 @@ function startReminderScheduler(client) {
       const utcHour = now.getUTCHours();
 
       // // ===== DEBUG =====
-      const formattedHour = "2 PM";
+      // const formattedHour = "2 PM";
 
       // ===== PROD =====
-      // const formattedHour = formatHour(utcHour);
+      const formattedHour = formatHour(utcHour);
 
       const roleName = remindersMap[formattedHour];
 

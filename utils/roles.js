@@ -103,7 +103,7 @@ async function handleZodiacReaction(reaction, user, add) {
 }
 // ===== Reminder Dropdown =====
 async function handleReminderSelect(interaction) {
-
+console.log("🚀 handleReminderSelect START");
   // const member = interaction.member;
   const member = await interaction.guild.members.fetch(interaction.user.id);
   const guild = interaction.guild;
@@ -112,8 +112,10 @@ async function handleReminderSelect(interaction) {
 
   const selectedTimes = interaction.values;
 
-  try {
+  try { 
 
+    await interaction.deferReply({ ephemeral: true });
+    console.log("✅ deferReply OK");
     // ===== Supprimer anciens rôles reminders =====
     for (const roleName of Object.values(remindersMap)) {
 
@@ -125,7 +127,7 @@ async function handleReminderSelect(interaction) {
         await member.roles.remove(role);
       }
     }
-
+console.log("🧹 anciens rôles supprimés");
     // ===== Ajouter nouveaux rôles reminders =====
     for (const time of selectedTimes) {
 
@@ -141,16 +143,16 @@ async function handleReminderSelect(interaction) {
       }
       await member.roles.add(role);
     }
-
+console.log("➕ nouveaux rôles ajoutés");
     // ===== Confirmation utilisateur =====
     const formatted =
       selectedTimes.length > 0
         ? selectedTimes.map(t => `${t} UTC`).join(", ")
         : "None";
-
-    await interaction.reply({
+console.log("📤 editReply envoi");
+    // await interaction.reply({
+    await interaction.editReply({
       content: `✅ Active reminders: ${formatted}`,
-      ephemeral: true
     });
 
   } catch (err) {
@@ -158,12 +160,14 @@ async function handleReminderSelect(interaction) {
     console.error("❌ Reminder dropdown error:", err);
 
     if (!interaction.replied) {
-      await interaction.reply({
+      // await interaction.reply({
+      await interaction.editReply({
         content: "❌ Error while updating reminders.",
-        ephemeral: true
       });
     }
+
   }
+      console.log("✅ interaction terminée");
 }
 
 // ===== Clear Reminders =====

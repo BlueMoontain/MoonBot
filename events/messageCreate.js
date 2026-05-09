@@ -37,14 +37,19 @@ module.exports = {
         // ===== Dynamic Custom Commands =====
         const customCommands = loadCustomCommands();
       
-        const customResponse = customCommands[commandName];
-      
-        if (customResponse) {
-      
-          await message.reply(customResponse);
-      
-          return;
-        }
+const customData = customCommands[commandName];
+
+if (customData?.responses?.length) {
+
+  const responses = customData.responses;
+
+  const randomResponse =
+    responses[Math.floor(Math.random() * responses.length)];
+
+  await message.reply(randomResponse);
+
+  return;
+}
       
       } catch (err) {
       

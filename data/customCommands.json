@@ -1,5 +1,24 @@
 {
-  "hello": "Hello everyone!",
-  "hola": "Que tal ?",
-  "hey": "wesh ça va ?"
+  "hello": {
+    "responses": [
+      "Hello everyone!"
+    ]
+  },
+  "hola": {
+    "responses": [
+      "Que tal ?"
+    ]
+  },
+  "hey": {
+    "responses": [
+      "wesh ça va ?"
+    ]
+  },
+  "astarion": {
+    "responses": [
+      "Salut mortel",
+      "Encore toi ?",
+      "Que veux-tu ?"
+    ]
+  }
 }
