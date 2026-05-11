@@ -50,6 +50,9 @@ async function loadCommands() {
       <div class="responses-list">
         ${responsesHtml}
       </div>
+      <button onclick="editCommand('${name}')">
+       Edit
+    </button>
 
       <button onclick="deleteCommand('${name}')">
         Delete
@@ -90,7 +93,57 @@ addResponseBtn.addEventListener(
 );
 
 addResponseField();
+async function editCommand(name) {
 
+  const res =
+    await fetch("/api/commands");
+
+  const commands =
+    await res.json();
+
+  const command =
+    commands[name];
+
+  if (!command) return;
+
+  // ===== Fill command name =====
+  document.getElementById("commandName").value =
+    name;
+
+  // ===== Clear current editors =====
+  responsesContainer.innerHTML = "";
+
+  // ===== Rebuild responses =====
+  command.responses.forEach(response => {
+
+    const wrapper =
+      document.createElement("div");
+
+    wrapper.className = "response-editor";
+
+    wrapper.innerHTML = `
+      <select class="response-type">
+        <option value="text">Text</option>
+        <option value="gif">GIF</option>
+        <option value="image">Image</option>
+        <option value="video">Video</option>
+      </select>
+
+      <textarea
+        class="response-content"
+      >${response.content}</textarea>
+    `;
+
+    wrapper.querySelector(".response-type").value =
+      response.type;
+
+    responsesContainer.appendChild(wrapper);
+  });
+
+  showFeedback(
+    `"${name}" returns beneath the moonlight...`
+  );
+}
 // ===== Create Command =====
 createBtn.addEventListener("click", async () => {
 
