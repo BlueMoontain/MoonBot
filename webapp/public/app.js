@@ -13,6 +13,9 @@ const addResponseBtn =
 const feedbackMessage =
   document.getElementById("feedbackMessage");
 
+const searchInput =
+  document.getElementById("searchInput");
+
   let editingCommand = null;
 
 // ===== Load Commands =====
@@ -132,6 +135,33 @@ card.innerHTML = `
 
     commandsList.appendChild(card);
   }
+}
+//search dans panel
+searchInput.addEventListener(
+  "input",
+  filterCommands
+);
+function filterCommands() {
+
+  const search =
+    searchInput.value.toLowerCase();
+
+  const cards =
+    document.querySelectorAll(".command-card");
+
+  cards.forEach(card => {
+
+    const commandName =
+      card.dataset.commandName.toLowerCase();
+
+    const visible =
+      commandName.includes(search);
+
+    card.style.display =
+      visible
+        ? "block"
+        : "none";
+  });
 }
 
 function addResponseField() {
