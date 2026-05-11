@@ -30,7 +30,10 @@ router.post("/", (req, res) => {
 
   const commands = loadCustomCommands();
 
-  commands[name.toLowerCase()] = responses;
+  commands[name.toLowerCase()] = {
+  responses
+};
+  // commands[name.toLowerCase()] = responses;
 
   saveCustomCommands(commands);
 

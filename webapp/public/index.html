@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Botstarion Panel</title>
+
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <div class="container">
+
+    <h1>🌙 Botstarion Control Panel</h1>
+
+    <!-- ===== Add Command ===== -->
+    <section class="panel">
+
+      <h2>Create a Command</h2>
+
+      <input
+        type="text"
+        id="commandName"
+        placeholder="Command name"
+      >
+
+      <textarea
+        id="commandResponse"
+        placeholder="Command response"
+      ></textarea>
+
+      <button id="createBtn">
+        Add Command
+      </button>
+
+    </section>
+
+    <!-- ===== Commands List ===== -->
+    <section class="panel">
+
+      <h2>Existing Commands</h2>
+
+      <div id="commandsList"></div>
+
+    </section>
+
+  </div>
+
+  <script src="app.js"></script>
+
+</body>
+</html>
