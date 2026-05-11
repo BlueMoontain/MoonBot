@@ -1,24 +1,45 @@
 {
   "hello": {
     "responses": [
-      "Hello everyone!"
+      {
+        "type": "text",
+        "content": "Hello everyone!"
+      }
     ]
   },
+
   "hola": {
     "responses": [
-      "Que tal ?"
+      {
+        "type": "text",
+        "content": "Que tal ?"
+      }
     ]
   },
+
   "hey": {
     "responses": [
-      "wesh ça va ?"
+      {
+        "type": "text",
+        "content": "wesh ça va ?"
+      }
     ]
   },
+
   "astarion": {
     "responses": [
-      "Salut mortel",
-      "Encore toi ?",
-      "Que veux-tu ?"
+      {
+        "type": "text",
+        "content": "Salut mortel"
+      },
+      {
+        "type": "text",
+        "content": "Encore toi ?"
+      },
+      {
+        "type": "text",
+        "content": "Que veux-tu ?"
+      }
     ]
   }
 }

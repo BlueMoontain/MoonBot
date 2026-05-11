@@ -34,9 +34,9 @@ module.exports = {
           return;
         }
       
-        // ===== Dynamic Custom Commands =====
-        const customCommands = loadCustomCommands();
-      
+// ===== Dynamic Custom Commands =====
+const customCommands = loadCustomCommands();
+
 const customData = customCommands[commandName];
 
 if (customData?.responses?.length) {
@@ -46,10 +46,42 @@ if (customData?.responses?.length) {
   const randomResponse =
     responses[Math.floor(Math.random() * responses.length)];
 
-  await message.reply(randomResponse);
+  switch (randomResponse.type) {
+
+    case "text":
+      await message.reply(randomResponse.content);
+      break;
+
+    case "gif":
+    case "image":
+    case "video":
+      await message.reply(randomResponse.content);
+      break;
+
+    default:
+      console.warn(
+        `⚠️ Unknown response type: ${randomResponse.type}`
+      );
+  }
 
   return;
 }
+//         // ===== Dynamic Custom Commands =====
+//         const customCommands = loadCustomCommands();
+      
+// const customData = customCommands[commandName];
+
+// if (customData?.responses?.length) {
+
+//   const responses = customData.responses;
+
+//   const randomResponse =
+//     responses[Math.floor(Math.random() * responses.length)];
+
+//   await message.reply(randomResponse);
+
+//   return;
+// }
       
       } catch (err) {
       
