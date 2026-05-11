@@ -4,6 +4,15 @@ const commandsList =
 const createBtn =
   document.getElementById("createBtn");
 
+const responsesContainer =
+  document.getElementById("responsesContainer");
+
+const addResponseBtn =
+  document.getElementById("addResponseBtn");
+
+const feedbackMessage =
+  document.getElementById("feedbackMessage");
+
 // ===== Load Commands =====
 async function loadCommands() {
 
@@ -51,48 +60,36 @@ async function loadCommands() {
   }
 }
 
-// // ===== Load Commands =====
-// async function loadCommands() {
+function addResponseField() {
 
-//   const res =
-//     await fetch("/api/commands");
+  const wrapper =
+    document.createElement("div");
 
-//   const commands =
-//     await res.json();
+  wrapper.className = "response-editor";
 
-//   commandsList.innerHTML = "";
+  wrapper.innerHTML = `
+    <select class="response-type">
+      <option value="text">Text</option>
+      <option value="gif">GIF</option>
+      <option value="image">Image</option>
+      <option value="video">Video</option>
+    </select>
 
-//   for (const [name, data] of Object.entries(commands)) {
+    <textarea
+      class="response-content"
+      placeholder="Response content"
+    ></textarea>
+  `;
 
-//     const responsesHtml = data.responses
-//   .map(response => `
-//     <div class="response-item">
-//       <strong>${response.type}</strong> :
-//       ${response.content}
-//     </div>
-//   `)
-//   .join("");
+  responsesContainer.appendChild(wrapper);
+}
 
-// card.innerHTML = `
-//   <h3>!${name}</h3>
+addResponseBtn.addEventListener(
+  "click",
+  addResponseField
+);
 
-//   <p>
-//     ${data.responses.length} response(s)
-//   </p>
-
-//   <div class="responses-list">
-//     ${responsesHtml}
-//   </div>
-
-//   <button onclick="deleteCommand('${name}')">
-//     Delete
-//   </button>
-// `;
-
-//     commandsList.appendChild(card);
-//   }
-// }
-
+addResponseField();
 
 // ===== Create Command =====
 createBtn.addEventListener("click", async () => {
@@ -100,10 +97,30 @@ createBtn.addEventListener("click", async () => {
   const name =
     document.getElementById("commandName").value;
 
-  const response =
-    document.getElementById("commandResponse").value;
+  if (!name) return;
 
-  if (!name || !response) return;
+  const responseEditors =
+    document.querySelectorAll(".response-editor");
+
+  const responses = [];
+
+  responseEditors.forEach(editor => {
+
+    const type =
+      editor.querySelector(".response-type").value;
+
+    const content =
+      editor.querySelector(".response-content").value;
+
+    if (!content) return;
+
+    responses.push({
+      type,
+      content
+    });
+  });
+
+  if (!responses.length) return;
 
   await fetch("/api/commands", {
 
@@ -114,32 +131,96 @@ createBtn.addEventListener("click", async () => {
     },
 
     body: JSON.stringify({
-
       name,
-
-      responses: [
-        {
-          type: "text",
-          content: response
-        }
-      ]
+      responses
     })
   });
 
   loadCommands();
+
+  document.getElementById("commandName").value = "";
+
+responsesContainer.innerHTML = "";
+
+addResponseField();
+
+showFeedback(
+  "Another whisper joins the moonlit archives..."
+);
 });
+
+// createBtn.addEventListener("click", async () => {
+
+//   const name =
+//     document.getElementById("commandName").value;
+
+//   const response =
+//     document.getElementById("commandResponse").value;
+
+//   if (!name || !response) return;
+
+//   await fetch("/api/commands", {
+
+//     method: "POST",
+
+//     headers: {
+//       "Content-Type": "application/json"
+//     },
+
+//     body: JSON.stringify({
+
+//       name,
+
+//       responses: [
+//         {
+//           type: "text",
+//           content: response
+//         }
+//       ]
+//     })
+//   });
+
+//   loadCommands();
+// });
 
 
 // ===== Delete =====
 async function deleteCommand(name) {
+
+  const confirmed = confirm(
+    `Cast "${name}" into the void forever?`
+  );
+
+  if (!confirmed) return;
 
   await fetch(`/api/commands/${name}`, {
     method: "DELETE"
   });
 
   loadCommands();
-}
 
+  showFeedback(
+    `"${name}" has been erased from memory...`
+  );
+}
+function showFeedback(message, type = "success") {
+
+  feedbackMessage.textContent = message;
+
+  feedbackMessage.className = "";
+
+  feedbackMessage.classList.add(
+    type === "success"
+      ? "feedback-success"
+      : "feedback-error"
+  );
+
+  feedbackMessage.style.display = "block";
+
+  setTimeout(() => {
+    feedbackMessage.style.display = "none";
+  }, 3000);
+}
 
 // ===== Init =====
 loadCommands();

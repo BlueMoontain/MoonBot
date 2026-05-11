@@ -85,3 +85,38 @@ button:hover {
 
   font-size: 0.95rem;
 }
+.response-editor {
+  background: #22252f;
+
+  padding: 15px;
+  margin-top: 15px;
+
+  border-radius: 10px;
+}
+
+.response-editor select,
+.response-editor textarea {
+  margin-top: 10px;
+}
+
+#feedbackMessage {
+  margin-bottom: 20px;
+
+  padding: 12px;
+
+  border-radius: 8px;
+
+  text-align: center;
+
+  display: none;
+}
+
+.feedback-success {
+  background: #214d35;
+  color: #9ff0b7;
+}
+
+.feedback-error {
+  background: #4d2121;
+  color: #ffb0b0;
+}
