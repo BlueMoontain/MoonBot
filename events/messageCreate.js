@@ -1,3 +1,13 @@
+const {
+
+  loreConfig,
+
+  loreMessages,
+
+  easterEggs
+
+} = require("../utils/lore");
+
 module.exports = {
     name: "messageCreate",
   
@@ -10,7 +20,7 @@ module.exports = {
       const prefix = "!";
   
       // Ignore non-commands
-      if (!message.content.startsWith(prefix)) return;
+      // if (!message.content.startsWith(prefix)) return; //a voir
   
       // Parse command
       const args = message.content
@@ -82,7 +92,155 @@ if (customData?.responses?.length) {
 
 //   return;
 // }
-      
+      // ===== Lore / Easter Eggs =====
+
+const channelCooldowns =
+  client.channelCooldowns ||
+  new Map();
+
+client.channelCooldowns =
+  channelCooldowns;
+
+const lastReply =
+  channelCooldowns.get(message.channel.id);
+
+const now = Date.now();
+
+const onCooldown =
+  lastReply &&
+  now - lastReply <
+    loreConfig.channelCooldown;
+
+if (!message.content.startsWith(prefix) &&
+    !onCooldown) {
+
+  let triggered = false;
+
+  const content =
+    message.content.toLowerCase();
+
+  // ===== Mention =====
+  if (
+    message.mentions.has(client.user) &&
+    Math.random() < 0.7
+  ) {
+
+    const responses =
+      loreMessages.onMention;
+
+    const response =
+      responses[
+        Math.floor(
+          Math.random() *
+          responses.length
+        )
+      ];
+      console.log("[LORE] Mention triggered");
+    await message.reply(response);
+
+    triggered = true;
+  }
+
+  // ===== Keywords =====
+  if (!triggered) {
+
+    for (const [keyword, data]
+      of Object.entries(
+        easterEggs.keywords
+      )) {
+
+      if (
+        content.includes(keyword) &&
+        Math.random() < data.probability
+      ) {
+
+        const response =
+          data.responses[
+            Math.floor(
+              Math.random() *
+              data.responses.length
+            )
+          ];
+console.log(
+  `[LORE] Keyword triggered: ${keyword}`
+);
+        await message.reply(response);
+
+        triggered = true;
+
+        break;
+      }
+    }
+  }
+
+  // ===== Regex Patterns =====
+  if (!triggered) {
+
+    for (const patternData
+      of easterEggs.patterns) {
+
+      if (
+        patternData.pattern.test(content) &&
+        Math.random() <
+          patternData.probability
+      ) {
+
+        const response =
+          patternData.responses[
+            Math.floor(
+              Math.random() *
+              patternData.responses.length
+            )
+          ];
+console.log(
+  `[LORE] Pattern triggered: ${patternData.pattern}`
+);
+        await message.reply(response);
+
+        triggered = true;
+
+        break;
+      }
+    }
+  }
+
+  // ===== Random Thoughts =====
+  if (
+    !triggered &&
+    Math.random() <
+      loreConfig.randomThoughtChance
+  ) {
+const useRareThought =
+  Math.random() < 0.1;
+
+const responses =
+  useRareThought
+    ? loreMessages.rareThoughts
+    : loreMessages.randomThoughts;
+
+    const response =
+      responses[
+        Math.floor(
+          Math.random() *
+          responses.length
+        )
+      ];
+console.log(
+  "[LORE] Random thought triggered"
+);
+    await message.reply(response);
+
+    triggered = true;
+  }
+
+  if (triggered) {
+
+    channelCooldowns.set(
+      message.channel.id,
+      now
+    );
+  }
+}
       } catch (err) {
       
         console.error(
