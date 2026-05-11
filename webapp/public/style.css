@@ -120,3 +120,158 @@ button:hover {
   background: #4d2121;
   color: #ffb0b0;
 }
+
+.media-preview {
+  width: 100%;
+
+  max-height: 300px;
+
+  object-fit: cover;
+
+  border-radius: 10px;
+
+  margin-top: 10px;
+}
+
+.command-header {
+  display: flex;
+
+  justify-content: space-between;
+  align-items: center;
+
+  margin-bottom: 15px;
+}
+
+.response-count {
+  opacity: 0.7;
+  font-size: 0.9rem;
+}
+
+.command-actions {
+  display: flex;
+  gap: 10px;
+
+  margin-top: 15px;
+}
+
+.edit-btn {
+  background: #5c7cff;
+}
+
+.delete-btn {
+  background: #a83c3c;
+}
+
+.response-item {
+  background: #1f222b;
+
+  padding: 12px;
+  margin-top: 10px;
+
+  border-radius: 8px;
+
+  border-left: 3px solid #7c5cff;
+}
+body {
+  margin: 0;
+  padding: 0;
+
+  background:
+    radial-gradient(circle at top,
+    #1b1b2f 0%,
+    #111217 60%);
+
+  color: #f1f1f1;
+
+  font-family: "Segoe UI", sans-serif;
+}
+
+.panel {
+  background: rgba(27, 29, 37, 0.95);
+
+  padding: 20px;
+  margin-bottom: 30px;
+
+  border-radius: 16px;
+
+  box-shadow:
+    0 0 20px rgba(124, 92, 255, 0.08);
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.panel:hover {
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 0 30px rgba(124, 92, 255, 0.15);
+}
+
+button {
+  background: linear-gradient(
+    135deg,
+    #7c5cff,
+    #5d3fd3
+  );
+
+  color: white;
+
+  border: none;
+  padding: 12px 20px;
+
+  border-radius: 10px;
+
+  cursor: pointer;
+
+  transition:
+    transform 0.15s ease,
+    opacity 0.15s ease;
+}
+
+button:hover {
+  opacity: 0.95;
+
+  transform: scale(1.03);
+}
+
+.command-card {
+  background: #232733;
+
+  padding: 18px;
+  margin-top: 18px;
+
+  border-radius: 14px;
+
+  transition:
+    border-color 0.2s ease,
+    transform 0.2s ease;
+
+  border: 1px solid transparent;
+}
+
+.command-card:hover {
+  border-color: rgba(124, 92, 255, 0.4);
+
+  transform: translateY(-2px);
+}
+
+h1 {
+  text-align: center;
+
+  color: #d6c7ff;
+
+  letter-spacing: 1px;
+
+  margin-bottom: 40px;
+}
+
+.command-card.editing {
+  border: 2px solid #c7b3ff;
+
+  box-shadow:
+    0 0 30px rgba(199, 179, 255, 0.35);
+
+  transform: scale(1.01);
+}

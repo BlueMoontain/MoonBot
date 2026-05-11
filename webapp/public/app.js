@@ -13,6 +13,8 @@ const addResponseBtn =
 const feedbackMessage =
   document.getElementById("feedbackMessage");
 
+  let editingCommand = null;
+
 // ===== Load Commands =====
 async function loadCommands() {
 
@@ -31,32 +33,101 @@ async function loadCommands() {
 
     card.className = "command-card";
 
+    card.dataset.commandName = name;
+
     const responsesHtml = data.responses
-      .map(response => `
-        <div class="response-item">
-          <strong>${response.type}</strong> :
-          ${response.content}
-        </div>
-      `)
-      .join("");
+  .map(response => {
 
-    card.innerHTML = `
-      <h3>!${name}</h3>
+    let preview = "";
 
-      <p>
-        ${data.responses.length} response(s)
-      </p>
+    switch (response.type) {
 
-      <div class="responses-list">
-        ${responsesHtml}
+      case "image":
+      case "gif":
+
+        preview = `
+          <img
+            src="${response.content}"
+            class="media-preview"
+          >
+        `;
+        break;
+
+      case "video":
+
+        preview = `
+          <video
+            class="media-preview"
+            controls
+          >
+            <source
+              src="${response.content}"
+            >
+          </video>
+        `;
+        break;
+
+      default:
+
+        preview = `
+          <p>${response.content}</p>
+        `;
+    }
+
+    return `
+      <div class="response-item">
+
+        <strong>
+          ${response.type}
+        </strong>
+
+        ${preview}
+
       </div>
-      <button onclick="editCommand('${name}')">
-       Edit
+    `;
+  })
+  .join("");
+    // const responsesHtml = data.responses
+    //   .map(response => `
+    //     <div class="response-item">
+    //       <strong>${response.type}</strong> :
+    //       ${response.content}
+    //     </div>
+    //   `)
+    //   .join("");
+
+card.innerHTML = `
+  <div class="command-header">
+
+    <h3>!${name}</h3>
+
+    <span class="response-count">
+      ${data.responses.length} response(s)
+    </span>
+
+  </div>
+
+  <div class="responses-list">
+    ${responsesHtml}
+  </div>
+
+  <div class="command-actions">
+
+    <button
+      class="edit-btn"
+      onclick="editCommand('${name}')"
+    >
+      Edit
     </button>
 
-      <button onclick="deleteCommand('${name}')">
-        Delete
-      </button>
+    <button
+      class="delete-btn"
+      onclick="deleteCommand('${name}')"
+    >
+      Delete
+    </button>
+
+  </div>
     `;
 
     commandsList.appendChild(card);
@@ -95,6 +166,7 @@ addResponseBtn.addEventListener(
 addResponseField();
 async function editCommand(name) {
 
+editingCommand = name;
   const res =
     await fetch("/api/commands");
 
@@ -139,7 +211,21 @@ async function editCommand(name) {
 
     responsesContainer.appendChild(wrapper);
   });
+document
+  .querySelectorAll(".command-card")
+  .forEach(card => {
 
+    card.classList.remove("editing");
+  });
+
+const activeCard =
+  document.querySelector(
+    `[data-command-name="${name}"]`
+  );
+
+if (activeCard) {
+  activeCard.classList.add("editing");
+}
   showFeedback(
     `"${name}" returns beneath the moonlight...`
   );
