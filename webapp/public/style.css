@@ -275,3 +275,113 @@ h1 {
 
   transform: scale(1.01);
 }
+
+.panel-subtitle {
+
+  opacity: 0.7;
+
+  margin-bottom: 24px;
+}
+
+.logout-button {
+
+  position: relative;
+
+  text-decoration: none;
+
+  padding: 11px 20px;
+
+  border-radius: 12px;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(56, 45, 84, 0.95),
+      rgba(33, 27, 51, 0.95)
+    );
+
+  border:
+    1px solid rgba(
+      180,
+      155,
+      255,
+      0.35
+    );
+
+  color: #f5ecff;
+
+  font-weight: 600;
+
+  letter-spacing: 0.4px;
+
+  transition:
+    all 0.22s ease;
+
+  box-shadow:
+    0 0 18px rgba(
+      140,
+      110,
+      255,
+      0.14
+    );
+
+  overflow: hidden;
+
+  backdrop-filter: blur(4px);
+}
+
+.logout-button:hover {
+
+  transform:
+    translateY(-2px);
+
+  border-color:
+    rgba(199, 179, 255, 0.75);
+
+  box-shadow:
+
+    0 0 26px rgba(
+      170,
+      140,
+      255,
+      0.32
+    ),
+
+    0 0 8px rgba(
+      255,
+      255,
+      255,
+      0.08
+    );
+
+  color: white;
+}
+
+.logout-button::before {
+
+  content: "";
+
+  position: absolute;
+
+  top: 0;
+  left: -120%;
+
+  width: 120%;
+  height: 100%;
+
+  background:
+    linear-gradient(
+      120deg,
+      transparent,
+      rgba(255,255,255,0.08),
+      transparent
+    );
+
+  transition:
+    0.45s ease;
+}
+
+.logout-button:hover::before {
+
+  left: 120%;
+}

@@ -229,7 +229,29 @@ app.get(
   }
 );
 
-app.use("/api/commands", commandsRoute);
+ // ===== route user session =====
+ app.get(
+
+  "/api/me",
+
+  requireAuth,
+
+  (req, res) => {
+
+    res.json({
+      user: req.session.user
+    });
+  }
+);
+
+app.use(
+
+  "/api/commands",
+
+  requireAuth,
+
+  commandsRoute
+);
 app.use(
 
   requireAuth,

@@ -390,6 +390,24 @@ function showFeedback(message, type = "success") {
     feedbackMessage.style.display = "none";
   }, 3000);
 }
+async function loadUser() {
 
+  const response =
+    await fetch("/api/me");
+
+  const data =
+    await response.json();
+
+  const user =
+    data.user;
+
+  document.getElementById(
+    "admin-info"
+  ).textContent =
+
+    `Connected as ${user.username}`;
+}
+
+loadUser();
 // ===== Init =====
 loadCommands();
