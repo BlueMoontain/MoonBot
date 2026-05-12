@@ -2,7 +2,23 @@ const { pronounsMap, zodiacMap, continentsMap } = require("../utils/roles");
 
 module.exports = {
   name: "messageReactionAdd",
-  async execute(reaction, user) {
+  async execute(reaction, user)
+   {console.log(
+  "🔥 Reaction detected:",
+  reaction.emoji.name,
+  "in",
+  reaction.message.channel.name,
+  
+);console.log(
+  reaction.message.guild.roles.cache.map(
+    r => r.name
+  )
+);
+console.log(
+  reaction.message.guild.roles.cache.map(
+    r => `"${r.name}"`
+  )
+);
     if (user.bot) return;
 
     try {
@@ -11,6 +27,57 @@ module.exports = {
       const emoji = reaction.emoji.name;
       const member = await reaction.message.guild.members.fetch(user.id);
       await member.fetch(true);
+
+// ===== Rules Verification =====
+
+if (
+  reaction.message.channel.name ===
+    "rules-📘" &&
+  emoji === "✅"
+) {
+
+  const verifiedRole =
+    reaction.message.guild.roles.cache.find(
+      r => r.name === "Verified ✅"
+    );
+
+  const challengerRole =
+    reaction.message.guild.roles.cache.find(
+      r =>
+        r.name ===
+        "Art Challengers ✏️✨️"
+    );
+
+  if (
+    !verifiedRole ||
+    !challengerRole
+  ) {
+
+    console.warn(
+      "⚠️ Verification roles not found"
+    );
+
+    return;
+  }
+
+  if (
+    !member.roles.cache.has(
+      verifiedRole.id
+    )
+  ) {
+
+    await member.roles.add([
+      verifiedRole,
+      challengerRole
+    ]);
+
+    console.log(
+      `🦇 ${member.user.tag} entered Botstarion's domain`
+    );
+  }
+
+  return;
+}
 
       // ===== Pronouns =====
       if (pronounsMap[emoji]) {

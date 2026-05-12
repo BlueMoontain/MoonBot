@@ -4,7 +4,9 @@ const {
 
   loreMessages,
 
-  easterEggs
+  easterEggs,
+
+  loreChannels
 
 } = require("../utils/lore");
 
@@ -111,13 +113,54 @@ const onCooldown =
   now - lastReply <
     loreConfig.channelCooldown;
 
+    const channelName =
+  message.channel.name;
+
+  const isVentingChannel =
+  loreChannels.venting.includes(
+    channelName
+  );
+
+const loreDisabled =
+  loreChannels.disabled.includes(
+    channelName
+  );
+
 if (!message.content.startsWith(prefix) &&
-    !onCooldown) {
+    !onCooldown && 
+    !loreDisabled) {
 
   let triggered = false;
 
   const content =
     message.content.toLowerCase();
+
+    // ===== Venting Room =====
+
+if (
+  isVentingChannel &&
+  Math.random() < 0.08
+) {
+
+  const responses =
+    loreMessages.ventingReplies;
+
+  const response =
+    responses[
+      Math.floor(
+        Math.random() *
+        responses.length
+      )
+    ];
+
+  console.log(
+    "[LORE] Venting reply triggered"
+  );
+
+  await message.reply(response);
+
+  triggered = true;
+}
 
   // ===== Mention =====
   if (
@@ -203,6 +246,54 @@ console.log(
       }
     }
   }
+
+  // ===== Ancient Text =====
+
+if (!triggered) {
+
+  const ancientKeywords = [
+
+    "vampire",
+    "vampyr",
+    "blood",
+    "curse",
+    "night"
+  ];
+
+  const mentionsAncient =
+    ancientKeywords.some(keyword =>
+      content.includes(keyword)
+    );
+
+  const isNightTime =
+    new Date().getHours() >= 22 ||
+    new Date().getHours() <= 4;
+
+  if (
+    mentionsAncient &&
+    isNightTime &&
+    Math.random() < 0.01
+  ) {
+
+    const ancientText =
+      loreMessages.ancientTexts[
+        Math.floor(
+          Math.random() *
+          loreMessages.ancientTexts.length
+        )
+      ];
+
+    console.log(
+      "[LORE] Ancient text triggered"
+    );
+
+    await message.reply(
+      ancientText
+    );
+
+    triggered = true;
+  }
+}
 
   // ===== Random Thoughts =====
   if (

@@ -60,9 +60,53 @@ const loreMessages = {
 
   "Do you ever wonder who watches the watchers, darling?",
 
-  "There are older things than me lurking in the dark corners of Discord."
-]
+  "There are older things than me lurking in the dark corners of Discord.", 
 
+  "XXXX"
+],
+    ventingReplies: [
+
+  "Even immortal supervisors understand difficult days, darling.",
+
+  "You are allowed to rest. The moon does it every night.",
+
+  "One difficult evening does not define you.",
+
+  "Try to be gentler with yourself, darling."
+],
+
+ ancientTexts: [
+
+`Harken close and beware the Vampyr.
+Beware its cold beauty. Beware its charm. Beware its curse.
+Above all, beware the pale noble, for the Vampyr cannot bear to be of the common folk.
+
+How doth one protect from the Beast?
+Walk not in blackest night, for the Vampyr loves these nights more than any other.
+
+If you must walk, do so by the light of our moon and take care.
+Carry the blessings and marks of your God at all times.
+
+But remember, your home is your fortress, if protected well.
+
+If you hear a knock in the night, be wary.
+Let no stranger into your home.
+
+If it be a friend, look upon them.
+Do you find them pallid and wan?
+See you any mark upon their neck?
+See you any dirt upon their clothes?
+
+Unless their need is great, turn all away but the most trusted.
+
+And if the Beast finds a way into your home, flee.
+Leave love and family behind.
+
+You will not save them if you fight.
+You will not see them again.
+
+But they will see you, pale and smiling, calling them into the night.`
+]
 };
 
 
@@ -166,6 +210,18 @@ lazy: {
     }
   ]
 };
+const loreChannels = {
+
+  disabled: [
+
+    "⚠️⭐️-daily-post-⭐️⚠️"
+  ],
+
+  venting: [
+
+    "venting-room-😮‍💨"
+  ]
+};
 
 
 module.exports = {
@@ -174,5 +230,7 @@ module.exports = {
 
   loreMessages,
 
-  easterEggs
+  easterEggs,
+
+  loreChannels,
 };
