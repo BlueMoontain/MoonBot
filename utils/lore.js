@@ -193,7 +193,102 @@ lazy: {
 }
   },
 
+Botstarion: {
 
+  probability: 0.5,
+
+  responses: [
+
+    "My dagger-happy friend ! What can I do for you ?", 
+
+"Come to kill me again, Darling ?",
+
+"Ah ! My favorite artist companion.",
+
+"It's always a pleasure to see you sauntering over.",
+
+"Do you mind ? I'm brooding.",
+
+"Hmm ?"
+  ]
+},
+
+
+Gale: {
+
+  probability: 0.5,
+
+  responses: [
+
+    "Ugh... Gale...", 
+
+"Why are you talking about that wizard ?",
+
+"I know his abs are illusion magic. I just can't prove it."  
+  ]
+},
+
+Bear: {
+
+  probability: 0.5,
+
+  responses: [
+
+    "Rawr !"
+  ]
+},
+
+Hair : {
+
+  probability: 0.5,
+
+  responses: [
+
+    "Still not the best hair in this server. * brushes hair +* "
+  ]
+},
+
+Pookie: {
+
+  probability: 0.5,
+
+  responses: [
+
+    "Fawning over me again, Darling ?", 
+
+"Yes, yes, I'm right here, love.",
+
+"* blushes *",
+
+"Cheeky little pup.",
+
+"Precious little Bhaal-babe",
+
+  ]
+},
+
+tit : {probability: 0.5,
+
+  responses: [
+
+    "Ah, yes. Your favorite subject.", 
+
+"This server is full of weirdos !",
+
+"I should go back to Faerûn. Or Bolivia. Anywhere else.",
+
+"* sigh *.",
+
+"I should be accustomed to all kind of deviancy, but this is too much, even for me.",
+
+"I thought I've seen everything, but you manage to surprise me every time. And no, that is not a compliment, my dear.",
+
+"You couldn't wait 10 seconds before being an absolute freak."
+
+  ]
+
+
+},
   patterns: [
 
     {
@@ -222,6 +317,23 @@ const loreChannels = {
     "venting-room-😮‍💨"
   ]
 };
+
+// Hydratation/Random :
+// Did you drink some water today ? Can't be productive without some hydratation, my dears.
+// If you don't drink your water, I can't get my blood supply. We can't have that, can we ?
+// Drink. Your. Water. Do I have to remind you your basic needs everyday ? Seriously, humans...
+// No, darling, one cup of coffee isn't a valid water intake. Ugh.
+// Everyone is so thirsty here, but water is never actually included. I can't believe any of you.
+
+
+// Random :
+// I wonder if I can ascend if I sell all the souls in this server...
+// Someone told me to open an "OnlyFangs"... I wonder what that means ?
+// The moon is beautiful tonight. A shame I have to enjoy it all by myself... And no, for the record, I was not thinking about anyone in this server. I mean, can you imagine ? Ha ! Ugh, no.
+// Looking fabulous today. Yes, I am talking about myself, of course. Who else ?
+// I am currently reading some "fanfictions" people wrote about me. It's... Imaginative, to say the least.
+// Do you think Strahd has his own discord server ? I should move there...
+// Do you think I could invite Drizzt Do'Urden here ? Maybe he has an artistic side...
 
 
 module.exports = {
