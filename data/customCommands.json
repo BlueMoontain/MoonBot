@@ -38,5 +38,37 @@
         "content": "Que veux-tu ?"
       }
     ]
+  },
+  "dragon": {
+    "responses": [
+      {
+        "type": "gif",
+        "content": "https://media1.tenor.com/m/oheEjFGBWLgAAAAC/n%C3%A3o.gif\n"
+      }
+    ]
+  },
+  "dragon2": {
+    "responses": [
+      {
+        "type": "gif",
+        "content": "https://c.tenor.com/oheEjFGBWLgAAAAC/tenor.gif"
+      }
+    ]
+  },
+  "!astarionvid": {
+    "responses": [
+      {
+        "type": "video",
+        "content": "https://www.youtube.com/shorts/iug5sLP0eKA?feature=share"
+      }
+    ]
+  },
+  "astarionvid": {
+    "responses": [
+      {
+        "type": "video",
+        "content": "https://www.youtube.com/shorts/iug5sLP0eKA?feature=share"
+      }
+    ]
   }
 }

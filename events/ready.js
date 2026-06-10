@@ -6,6 +6,12 @@ const {
 } = require("../config/messages.json");
 
 const {
+  ActionRowBuilder,
+  ButtonBuilder,
+  ButtonStyle
+} = require("discord.js");
+
+const {
   pronounsMap,
   zodiacMap,
   continentsMap,
@@ -100,6 +106,36 @@ if (!reminderMsg) {
   });
 
   console.log(`[LOG] Message reminders créé dans ${guild.name}`);
+}
+// ===== Onboarding =====
+// ===== Onboarding =====
+
+const onboardingText =
+  "Please click the button below to accept the rules and gain access to the server!";
+
+let onboardingMsg = reminderMessages.find(
+  m => m.content === onboardingText
+);
+
+if (!onboardingMsg) {
+
+  const row = new ActionRowBuilder()
+    .addComponents(
+      new ButtonBuilder()
+        .setCustomId("accept-rules")
+        .setLabel("Accept Rules")
+        .setEmoji("✅")
+        .setStyle(ButtonStyle.Success)
+    );
+
+  onboardingMsg = await channel.send({
+    content: onboardingText,
+    components: [row]
+  });
+
+  console.log(
+    `[LOG] Message onboarding créé dans ${guild.name}`
+  );
 }
     }
 

@@ -36,17 +36,37 @@ if (
   emoji === "✅"
 ) {
 
-  const verifiedRole =
-    reaction.message.guild.roles.cache.find(
-      r => r.name === "Verified ✅"
-    );
+  // const verifiedRole =
+  //   reaction.message.guild.roles.cache.find(
+  //     r => r.name === "Verified ✅"
+  //   );
 
-  const challengerRole =
-    reaction.message.guild.roles.cache.find(
-      r =>
-        r.name ===
-        "Art Challengers ✏️✨️"
-    );
+  console.log("=== ROLES ===");
+
+guild.roles.cache.forEach(role => {
+  console.log(`[${role.name}]`);
+});
+
+const verifiedRole =
+  guild.roles.cache.find(
+    r => r.name.includes("Verified")
+  );
+
+console.log("Verified trouvé :", verifiedRole?.name);
+
+  // const challengerRole =
+  //   reaction.message.guild.roles.cache.find(
+  //     r =>
+  //       r.name ===
+  //       "Art Challengers ✏️✨️"
+  //   );
+
+  const artRole =
+  guild.roles.cache.find(
+    r => r.name.includes("Art Challengers")
+  );
+
+console.log("Art trouvé :", artRole?.name);
 
   if (
     !verifiedRole ||

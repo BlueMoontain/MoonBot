@@ -208,6 +208,95 @@ async function handleClearReminders(interaction) {
     }
   }
 }
+
+async function handleAcceptRules(interaction) {
+
+  const member =
+    await interaction.guild.members.fetch(
+      interaction.user.id
+    );
+
+  const guild = interaction.guild;
+
+  if (!member || !guild) return;
+
+  try {
+console.log("=== ROLES SERVER ===");
+
+guild.roles.cache.forEach(role => {
+  console.log(role.name);
+});
+
+const verifiedRole =
+  guild.roles.cache.find(
+    r => r.name.includes("Verified")
+  );
+
+console.log(
+  "verifiedRole =",
+  verifiedRole?.name
+);
+
+const artRole =
+  guild.roles.cache.find(
+    r => r.name.includes("Art Challengers")
+  );
+
+console.log(
+  "artRole =",
+  artRole?.name
+);
+    // const verifiedRole =
+    //   guild.roles.cache.find(
+    //     r => r.name === "Verified ✅️"
+    //   );
+
+    // const artRole =
+    //   guild.roles.cache.find(
+    //     r => r.name === "Art Challengers ✏️✨️"
+    //   );
+
+    if (!verifiedRole) {
+      return interaction.reply({
+        content: "❌ Verified role not found.",
+        ephemeral: true
+      });
+    }
+
+    if (!artRole) {
+      return interaction.reply({
+        content: "❌ Art Challengers role not found.",
+        ephemeral: true
+      });
+    }
+
+    await member.roles.add(verifiedRole);
+    await member.roles.add(artRole);
+
+    await interaction.reply({
+      content:
+        "✅ Welcome ! You now have access to the server.",
+      ephemeral: true
+    });
+
+  } catch (err) {
+
+    console.error(
+      "❌ Accept rules error:",
+      err
+    );
+
+    if (!interaction.replied) {
+
+      await interaction.reply({
+        content:
+          "❌ Error while assigning roles.",
+        ephemeral: true
+      });
+    }
+  }
+}
+
 // ===== EXPORT (propre, unique, en bas) =====
 module.exports = {
   pronounsMap,
@@ -217,7 +306,8 @@ module.exports = {
   handlePronounsReaction,
   handleZodiacReaction,
   handleReminderSelect,
-  handleClearReminders
+  handleClearReminders,
+  handleAcceptRules
 };
 
 // console.log("🚨 ROLES FILE VERSION TEST");

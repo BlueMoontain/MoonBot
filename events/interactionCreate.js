@@ -1,7 +1,8 @@
 const {
   handleButton,
   handleReminderSelect,
-  handleClearReminders
+  handleClearReminders,
+  handleAcceptRules
 } = require("../utils/roles");
 
 
@@ -13,6 +14,15 @@ module.exports = {
 console.log("📥 Interaction reçue :", interaction.customId);
     // ===== Buttons =====
 if (interaction.isButton()) {
+
+  if (
+  interaction.customId ===
+  "accept-rules"
+) {
+  return handleAcceptRules(
+    interaction
+  );
+}
 
   if (interaction.customId === "clear-reminders") {
     return handleClearReminders(interaction);
