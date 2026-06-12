@@ -31,8 +31,32 @@ const loreMessages = {
 
     "The moon is high. That means some of you should be drawing.",
 
-    "Honestly, darling, I leave for five minutes..."
-  ],
+    "Honestly, darling, I leave for five minutes...",
+
+
+  // ===== Hydration =====
+
+  "Did you drink some water today? Can't be productive without some hydration, my dears.",
+
+  "If you don't drink your water, I can't get my blood supply. We can't have that, can we?",
+
+  "Drink. Your. Water. Do I have to remind you your basic needs every day? Seriously, humans...",
+
+  "No, darling, one cup of coffee isn't a valid water intake. Ugh.",
+
+  "Everyone is so thirsty here, but water is never actually included. I can't believe any of you.",
+
+  // ===== Misc =====
+
+  "I wonder if I can ascend if I sell all the souls in this server...",
+
+  "Someone told me to open an 'OnlyFangs'... I wonder what that means?",
+
+  "Looking fabulous today. Yes, I am talking about myself, of course. Who else?",
+
+  "I am currently reading some fanfictions people wrote about me. It's... imaginative, to say the least."
+]
+  ,
 
   encouragements: [
 
@@ -195,7 +219,7 @@ lazy: {
 
 botstarion: {
 
-  probability: 0.5,
+  probability: 1,
 
   responses: [
 
