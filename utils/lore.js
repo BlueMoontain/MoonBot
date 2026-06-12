@@ -193,7 +193,7 @@ lazy: {
 }
   },
 
-Botstarion: {
+botstarion: {
 
   probability: 0.5,
 
@@ -214,7 +214,7 @@ Botstarion: {
 },
 
 
-Gale: {
+gale: {
 
   probability: 0.5,
 
@@ -228,7 +228,7 @@ Gale: {
   ]
 },
 
-Bear: {
+bear: {
 
   probability: 0.5,
 
@@ -238,7 +238,7 @@ Bear: {
   ]
 },
 
-Hair : {
+hair : {
 
   probability: 0.5,
 
@@ -248,7 +248,7 @@ Hair : {
   ]
 },
 
-Pookie: {
+pookie: {
 
   probability: 0.5,
 
@@ -286,8 +286,87 @@ tit : {probability: 0.5,
 "You couldn't wait 10 seconds before being an absolute freak."
 
   ]
+},
+tits : {probability: 0.5,
 
+  responses: [
 
+    "Ah, yes. Your favorite subject.", 
+
+"This server is full of weirdos !",
+
+"I should go back to Faerûn. Or Bolivia. Anywhere else.",
+
+"* sigh *.",
+
+"I should be accustomed to all kind of deviancy, but this is too much, even for me.",
+
+"I thought I've seen everything, but you manage to surprise me every time. And no, that is not a compliment, my dear.",
+
+"You couldn't wait 10 seconds before being an absolute freak."
+
+  ]
+},
+
+peepee : {probability: 0.5,
+
+  responses: [
+
+    "Ah, yes. Your favorite subject.", 
+
+"This server is full of weirdos !",
+
+"I should go back to Faerûn. Or Bolivia. Anywhere else.",
+
+"* sigh *.",
+
+"I should be accustomed to all kind of deviancy, but this is too much, even for me.",
+
+"I thought I've seen everything, but you manage to surprise me every time. And no, that is not a compliment, my dear.",
+
+"You couldn't wait 10 seconds before being an absolute freak."
+
+  ]
+  },
+dick : {probability: 0.5,
+
+  responses: [
+
+    "Ah, yes. Your favorite subject.", 
+
+"This server is full of weirdos !",
+
+"I should go back to Faerûn. Or Bolivia. Anywhere else.",
+
+"* sigh *.",
+
+"I should be accustomed to all kind of deviancy, but this is too much, even for me.",
+
+"I thought I've seen everything, but you manage to surprise me every time. And no, that is not a compliment, my dear.",
+
+"You couldn't wait 10 seconds before being an absolute freak."
+
+  ] 
+  },
+schlong  : {probability: 0.5,
+
+  responses: [
+
+    "Ah, yes. Your favorite subject.", 
+
+"This server is full of weirdos !",
+
+"I should go back to Faerûn. Or Bolivia. Anywhere else.",
+
+"* sigh *.",
+
+"I should be accustomed to all kind of deviancy, but this is too much, even for me.",
+
+"I thought I've seen everything, but you manage to surprise me every time. And no, that is not a compliment, my dear.",
+
+"You couldn't wait 10 seconds before being an absolute freak."
+
+  ]
 },
   patterns: [
 

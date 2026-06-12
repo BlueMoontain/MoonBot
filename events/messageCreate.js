@@ -78,22 +78,6 @@ if (customData?.responses?.length) {
 
   return;
 }
-//         // ===== Dynamic Custom Commands =====
-//         const customCommands = loadCustomCommands();
-      
-// const customData = customCommands[commandName];
-
-// if (customData?.responses?.length) {
-
-//   const responses = customData.responses;
-
-//   const randomResponse =
-//     responses[Math.floor(Math.random() * responses.length)];
-
-//   await message.reply(randomResponse);
-
-//   return;
-// }
       // ===== Lore / Easter Eggs =====
 
 const channelCooldowns =
