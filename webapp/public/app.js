@@ -257,7 +257,7 @@ if (activeCard) {
   activeCard.classList.add("editing");
 }
   showFeedback(
-    `"${name}" returns beneath the moonlight...`
+    `"${name}" ok, c'est modifié !`
   );
 }
 // ===== Create Command =====
@@ -314,44 +314,9 @@ responsesContainer.innerHTML = "";
 addResponseField();
 
 showFeedback(
-  "Another whisper joins the moonlit archives..."
+  "C'est noté.(et bien sauvegardé)"
 );
 });
-
-// createBtn.addEventListener("click", async () => {
-
-//   const name =
-//     document.getElementById("commandName").value;
-
-//   const response =
-//     document.getElementById("commandResponse").value;
-
-//   if (!name || !response) return;
-
-//   await fetch("/api/commands", {
-
-//     method: "POST",
-
-//     headers: {
-//       "Content-Type": "application/json"
-//     },
-
-//     body: JSON.stringify({
-
-//       name,
-
-//       responses: [
-//         {
-//           type: "text",
-//           content: response
-//         }
-//       ]
-//     })
-//   });
-
-//   loadCommands();
-// });
-
 
 // ===== Delete =====
 async function deleteCommand(name) {
@@ -369,7 +334,7 @@ async function deleteCommand(name) {
   loadCommands();
 
   showFeedback(
-    `"${name}" has been erased from memory...`
+    `"${name}" est supprimé ! On en parle plus...`
   );
 }
 function showFeedback(message, type = "success") {
