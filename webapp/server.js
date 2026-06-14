@@ -278,8 +278,17 @@ app.get(
   }
 );
 
-const PORT = 3000;
+// const PORT = 3000;
 
-app.listen(PORT, () => {
-  console.log(`🌍 Web panel running on http://localhost:${PORT}`);
+// app.listen(PORT, () => {
+//   console.log(`🌍 Web panel running on http://localhost:${PORT}`);
+// });
+
+const PORT = process.env.WEB_PORT || 3000;
+const HOST = process.env.WEB_HOST || "0.0.0.0";
+
+app.listen(PORT, HOST, () => {
+  console.log(
+    `🌍 Web panel running on http://${HOST}:${PORT}`
+  );
 });
