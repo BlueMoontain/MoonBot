@@ -54,7 +54,11 @@ const loreMessages = {
 
   "Looking fabulous today. Yes, I am talking about myself, of course. Who else?",
 
-  "I am currently reading some fanfictions people wrote about me. It's... imaginative, to say the least."
+  "I am currently reading some fanfictions people wrote about me. It's... imaginative, to say the least.",
+
+  "Do you think Strahd has his own discord server ? I should move there..." ,
+  
+  "Do you think I could invite Drizzt Do'Urden here ? Maybe he has an artistic side..."
 ]
   ,
 
@@ -420,24 +424,6 @@ const loreChannels = {
     "venting-room-😮‍💨"
   ]
 };
-
-// Hydratation/Random :
-// Did you drink some water today ? Can't be productive without some hydratation, my dears.
-// If you don't drink your water, I can't get my blood supply. We can't have that, can we ?
-// Drink. Your. Water. Do I have to remind you your basic needs everyday ? Seriously, humans...
-// No, darling, one cup of coffee isn't a valid water intake. Ugh.
-// Everyone is so thirsty here, but water is never actually included. I can't believe any of you.
-
-
-// Random :
-// I wonder if I can ascend if I sell all the souls in this server...
-// Someone told me to open an "OnlyFangs"... I wonder what that means ?
-// The moon is beautiful tonight. A shame I have to enjoy it all by myself... And no, for the record, I was not thinking about anyone in this server. I mean, can you imagine ? Ha ! Ugh, no.
-// Looking fabulous today. Yes, I am talking about myself, of course. Who else ?
-// I am currently reading some "fanfictions" people wrote about me. It's... Imaginative, to say the least.
-// Do you think Strahd has his own discord server ? I should move there...
-// Do you think I could invite Drizzt Do'Urden here ? Maybe he has an artistic side...
-
 
 module.exports = {
 

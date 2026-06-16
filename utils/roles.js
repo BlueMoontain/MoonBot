@@ -4,8 +4,8 @@ console.log("🚨 ROLES FILE VERSION CLEAN");
 // } = require("../scheduler/reminderScheduler");
 // ===== Pronoms =====
 const pronounsMap = {
-  "💛": "She/Her",
   "💚": "He/Him",
+  "💛": "She/Her",
   "💜": "They/Them",
   "🧡": "Any Pronouns",
   "💙": "Ask Me"
