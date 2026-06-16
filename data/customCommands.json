@@ -70,5 +70,21 @@
         "content": "https://www.youtube.com/shorts/iug5sLP0eKA?feature=share"
       }
     ]
+  },
+  "bro": {
+    "responses": [
+      {
+        "type": "text",
+        "content": "Potatoe"
+      }
+    ]
+  },
+  "chaton": {
+    "responses": [
+      {
+        "type": "text",
+        "content": "chamois"
+      }
+    ]
   }
 }

@@ -23,7 +23,14 @@ const {
   
       const commands = loadCustomCommands();
   
-      commands[commandName] = response;
+      commands[commandName] = {
+  responses: [
+    {
+      type: "text",
+      content: response
+    }
+  ]
+};
   
       saveCustomCommands(commands);
   
