@@ -36,11 +36,6 @@ if (
   emoji === "✅"
 ) {
 
-  // const verifiedRole =
-  //   reaction.message.guild.roles.cache.find(
-  //     r => r.name === "Verified ✅"
-  //   );
-
   console.log("=== ROLES ===");
 
 guild.roles.cache.forEach(role => {
@@ -54,12 +49,6 @@ const verifiedRole =
 
 console.log("Verified trouvé :", verifiedRole?.name);
 
-  // const challengerRole =
-  //   reaction.message.guild.roles.cache.find(
-  //     r =>
-  //       r.name ===
-  //       "Art Challengers ✏️✨️"
-  //   );
 
   const artRole =
   guild.roles.cache.find(
@@ -173,125 +162,3 @@ if (continentsMap[emoji]) {
   },
   
 };
-
-
-// // events/messageReactionAdd.js
-// const { pronounsMap, zodiacMap, handlePronounsReaction, handleZodiacReaction } = require("../utils/roles");
-
-// module.exports = {
-//   name: "messageReactionAdd",
-//   async execute(reaction, user) {
-//     if (user.bot) return; // Ignore les bots
-
-//     const emoji = reaction.emoji.name;
-
-//     // Vérifie si l'emoji correspond à un pronom
-//     if (pronounsMap[emoji]) {
-//       await handlePronounsReaction(reaction, user, true);
-//     }
-
-//     // Vérifie si l'emoji correspond à un signe du zodiaque
-//     if (zodiacMap[emoji]) {
-//       await handleZodiacReaction(reaction, user, true);
-//     }
-//   }
-// };
-
-
-// // events/messageReactionAdd.js
-// const { handlePronounsReaction, handleZodiacReaction, pronounsMap, zodiacMap } = require("../utils/roles");
-
-// module.exports = {
-//   name: "messageReactionAdd",
-//   async execute(reaction, user) {
-//     if (user.bot) return;
-
-//     try {
-//       if (reaction.partial) await reaction.fetch();
-
-//       // Filtrage strict → uniquement les messages bot du salon #getroles
-//       if (!reaction.message.guild || !reaction.message.channel.name.includes("getroles") || !reaction.message.author.bot) return;
-
-//       const emoji = reaction.emoji.name;
-
-//       // Bloquer les réactions non valides
-//       if (!pronounsMap[emoji] && !zodiacMap[emoji]) {
-//         await reaction.users.remove(user.id);
-//         return;
-//       }
-
-//       if (pronounsMap[emoji]) await handlePronounsReaction(reaction, user, true);
-//       else if (zodiacMap[emoji]) await handleZodiacReaction(reaction, user, true);
-//     } catch (err) {
-//       console.error("Erreur MessageReactionAdd:", err);
-//     }
-//   },
-// };
-
-
-// // events/messageReactionAdd.js
-// const { handlePronounsReaction, handleZodiacReaction, pronounsMap, zodiacMap } = require("../utils/roles");
-
-// module.exports = {
-//   name: "messageReactionAdd",
-//   async execute(reaction, user) {
-//     if (user.bot) return;
-
-//     try {
-//       if (reaction.partial) await reaction.fetch();
-
-//       const emoji = reaction.emoji.name;
-
-//       if (pronounsMap[emoji]) {
-//         await handlePronounsReaction(reaction, user, true);
-//       } else if (zodiacMap[emoji]) {
-//         await handleZodiacReaction(reaction, user, true);
-//       }
-//     } catch (err) {
-//       console.error("Erreur MessageReactionAdd:", err);
-//     }
-//   },
-// };
-
-
-
-// const { handlePronounsReaction, handleZodiacReaction, pronounsMap, zodiacMap } = require("../utils/roles");
-
-// module.exports = {
-//   name: "messageReactionAdd",
-//   async execute(reaction, user) {
-//     if (user.bot) return;
-
-//     try {
-//       if (reaction.partial) await reaction.fetch();
-
-//       const emoji = reaction.emoji.name;
-
-//       if (pronounsMap[emoji]) {
-//         await handlePronounsReaction(reaction, user, true);
-//       } else if (zodiacMap[emoji]) {
-//         await handleZodiacReaction(reaction, user, true); // add=true pour ajout
-//       }
-//     } catch (err) {
-//       console.error("Erreur MessageReactionAdd:", err);
-//     }
-//   },
-// };
-
-
-// const { handlePronounsReaction } = require("../utils/roles");
-
-// module.exports = {
-//   name: "messageReactionAdd",
-//   execute: (client, reaction, user) => {
-//     if (user.bot) return;
-//     handlePronounsReaction(reaction, user, true);
-//   }
-// };
-
-// const { handlePronounsReaction } = require("../utils/roles");
-
-// module.exports = {
-//   name: "messageReactionAdd",
-//   async execute(client, reaction, user) { if (user.bot) return; handlePronounsReaction(reaction, user, true); }
-// };

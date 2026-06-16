@@ -21,10 +21,6 @@ module.exports = {
       // Prefix
       const prefix = "!";
   
-      // Ignore non-commands
-      // if (!message.content.startsWith(prefix)) return; //a voir
-  
-      // Parse command
       const args = message.content
         .slice(prefix.length)
         .trim()
@@ -325,20 +321,5 @@ console.log(
       
         message.reply("❌ Error while executing command.");
       }
-    //   // Find command
-    //   const command = client.commands.get(commandName);
-  
-    //   if (!command) return;
-  
-    //   try {
-  
-    //     await command.execute(message, args);
-  
-    //   } catch (err) {
-  
-    //     console.error(`❌ Error executing command ${commandName}:`, err);
-  
-    //     message.reply("❌ Error while executing command.");
-    //   }
     }
   };
