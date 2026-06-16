@@ -4,6 +4,12 @@ const commandsList =
 const createBtn =
   document.getElementById("createBtn");
 
+const cancelEditBtn =
+  document.getElementById("cancelEditBtn");
+
+const editorTitle =
+  document.getElementById("editorTitle");
+
 const responsesContainer =
   document.getElementById("responsesContainer");
 
@@ -90,14 +96,6 @@ async function loadCommands() {
     `;
   })
   .join("");
-    // const responsesHtml = data.responses
-    //   .map(response => `
-    //     <div class="response-item">
-    //       <strong>${response.type}</strong> :
-    //       ${response.content}
-    //     </div>
-    //   `)
-    //   .join("");
 
 card.innerHTML = `
   <div class="command-header">
@@ -171,7 +169,9 @@ function addResponseField() {
 
   wrapper.className = "response-editor";
 
-  wrapper.innerHTML = `
+wrapper.innerHTML = `
+  <div class="response-toolbar">
+
     <select class="response-type">
       <option value="text">Text</option>
       <option value="gif">GIF</option>
@@ -179,13 +179,47 @@ function addResponseField() {
       <option value="video">Video</option>
     </select>
 
-    <textarea
-      class="response-content"
-      placeholder="Response content"
-    ></textarea>
-  `;
+    <button
+      type="button"
+      class="remove-response-btn"
+    >
+      ✖
+    </button>
+
+  </div>
+
+  <textarea
+    class="response-content"
+    placeholder="Response content"
+  ></textarea>
+`;
 
   responsesContainer.appendChild(wrapper);
+
+  const removeBtn =
+  wrapper.querySelector(
+    ".remove-response-btn"
+  );
+
+  removeBtn.addEventListener(
+  "click",
+  () => {
+
+    console.log("REMOVE CLICK");
+
+    console.log(
+      document.querySelectorAll(
+        ".response-editor"
+      ).length
+    );
+
+    wrapper.remove();
+
+    updateRemoveButtons();
+    
+    console.log("REMOVED");
+  }
+);
 }
 
 addResponseBtn.addEventListener(
@@ -193,10 +227,24 @@ addResponseBtn.addEventListener(
   addResponseField
 );
 
+
 addResponseField();
+
+updateRemoveButtons();
+
 async function editCommand(name) {
 
 editingCommand = name;
+
+  createBtn.textContent =
+    "💾 Enregistrer les modifications";
+
+  cancelEditBtn.style.display =
+  "inline-block";
+
+  editorTitle.textContent =
+  `📝 Modification de !${name}`;
+
   const res =
     await fetch("/api/commands");
 
@@ -223,24 +271,60 @@ editingCommand = name;
 
     wrapper.className = "response-editor";
 
-    wrapper.innerHTML = `
-      <select class="response-type">
-        <option value="text">Text</option>
-        <option value="gif">GIF</option>
-        <option value="image">Image</option>
-        <option value="video">Video</option>
-      </select>
+wrapper.innerHTML = `
+  <div class="response-toolbar">
 
-      <textarea
-        class="response-content"
-      >${response.content}</textarea>
-    `;
+    <select class="response-type">
+      <option value="text">Text</option>
+      <option value="gif">GIF</option>
+      <option value="image">Image</option>
+      <option value="video">Video</option>
+    </select>
 
-    wrapper.querySelector(".response-type").value =
-      response.type;
+    <button
+      type="button"
+      class="remove-response-btn"
+    >
+      ✖
+    </button>
 
-    responsesContainer.appendChild(wrapper);
-  });
+  </div>
+
+  <textarea
+    class="response-content"
+  >${response.content}</textarea>
+`;
+wrapper.querySelector(".response-type").value =
+  response.type;
+
+responsesContainer.appendChild(wrapper);
+
+const removeBtn =
+  wrapper.querySelector(
+    ".remove-response-btn"
+  );
+
+removeBtn.addEventListener(
+  "click",
+  () => {
+
+    const editors =
+      document.querySelectorAll(
+        ".response-editor"
+      );
+
+    if (editors.length <= 1) {
+      return;
+    }
+
+    wrapper.remove();
+  }
+);
+
+});
+
+updateRemoveButtons();
+
 document
   .querySelectorAll(".command-card")
   .forEach(card => {
@@ -257,7 +341,7 @@ if (activeCard) {
   activeCard.classList.add("editing");
 }
   showFeedback(
-    `"${name}" ok, c'est modifié !`
+    `"${name}" C'est effectivement modifiable, allons-y !`
   );
 }
 // ===== Create Command =====
@@ -313,11 +397,44 @@ responsesContainer.innerHTML = "";
 
 addResponseField();
 
+updateRemoveButtons();
+
 showFeedback(
-  "C'est noté.(et bien sauvegardé)"
+  "J'ai lu trop vite, j'ai pas retenu... (c'est bien sauvegardé :P)"
 );
 });
+// ===== Cancel Button =====
+cancelEditBtn.addEventListener(
+  "click",
+  () => {
 
+    editingCommand = null;
+
+    editorTitle.textContent =
+      "Create a Command";
+
+    createBtn.textContent =
+      "Add Command";
+
+    document.getElementById(
+      "commandName"
+    ).value = "";
+
+    responsesContainer.innerHTML = "";
+
+    addResponseField();
+
+    document
+      .querySelectorAll(".command-card")
+      .forEach(card => {
+
+        card.classList.remove("editing");
+      });
+
+    cancelEditBtn.style.display =
+      "none";
+  }
+);
 // ===== Delete =====
 async function deleteCommand(name) {
 
@@ -334,7 +451,7 @@ async function deleteCommand(name) {
   loadCommands();
 
   showFeedback(
-    `"${name}" est supprimé ! On en parle plus...`
+    `"${name}" est supprimé ! Finito ! N'en parlons plus.`
   );
 }
 function showFeedback(message, type = "success") {
@@ -373,6 +490,32 @@ async function loadUser() {
     `Connected as ${user.username}`;
 }
 
+function updateRemoveButtons() {
+
+  const editors =
+    document.querySelectorAll(
+      ".response-editor"
+    );
+
+  const removeButtons =
+    document.querySelectorAll(
+      ".remove-response-btn"
+    );
+
+  const canRemove =
+    editors.length > 1;
+
+  removeButtons.forEach(btn => {
+
+    btn.style.display =
+      canRemove
+        ? "inline-block"
+        : "none";
+  });
+}
+
 loadUser();
+
+
 // ===== Init =====
 loadCommands();
