@@ -275,6 +275,25 @@ if (!triggered) {
   }
 }
 
+  // ===== Uppercase Detector =====
+  if (!triggered) {
+    const letters = message.content.match(/\p{L}/gu) || [];
+    const uppercaseLetters = message.content.match(/\p{Lu}/gu) || [];
+    const words = message.content.trim().split(/\s+/);
+
+    const hasMinLetters = letters.length >= 8;
+    const isMostlyCaps = letters.length > 0 && (uppercaseLetters.length / letters.length) >= 0.85;
+    const hasSufficientContext = words.length >= 3 || letters.length >= 12;
+
+    if (hasMinLetters && isMostlyCaps && hasSufficientContext) {
+      const responses = loreMessages.uppercaseReplies;
+      const response = responses[Math.floor(Math.random() * responses.length)];
+      console.log("[LORE] Uppercase detected:", message.content);
+      await message.reply(response);
+      triggered = true;
+    }
+  }
+
   // ===== Random Thoughts =====
   if (
     !triggered &&

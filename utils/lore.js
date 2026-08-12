@@ -103,6 +103,16 @@ const loreMessages = {
   "Try to be gentler with yourself, darling."
 ],
 
+  uppercaseReplies: [
+    "Why are you SHOUTING ?!",
+    "Worst than a screeching bat...",
+    "*startled*",
+    "Are you screaming in pain ?! Need me to end your suffering ?",
+    "You woke me up again... I need my beauty sleep.",
+    "I hope you're shouting for a good reason...",
+    "*plugs his ears*"
+  ],
+
  ancientTexts: [
 
 `Harken close and beware the Vampyr.
