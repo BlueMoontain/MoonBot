@@ -2,6 +2,8 @@ const loreConfig = {
 
   channelCooldown: 30000,
 
+  uppercaseCooldown: 60000,
+
   randomThoughtChance: 0.003
 };
 
@@ -171,7 +173,8 @@ const easterEggs = {
     },
 
     tired: {
-      probability: 0.06,
+      probability: 1,
+      // 0.06
 
       responses: [
         "Even immortal supervisors require rest occasionally.",
@@ -228,8 +231,7 @@ lazy: {
 
     "Tragic. Absolutely tragic."
   ]
-}
-  },
+},
 
 botstarion: {
 
@@ -406,6 +408,7 @@ schlong  : {probability: 0.5,
 
   ]
 },
+  },
   patterns: [
 
     {

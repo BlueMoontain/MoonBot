@@ -83,8 +83,18 @@ const channelCooldowns =
 client.channelCooldowns =
   channelCooldowns;
 
+const uppercaseCooldowns =
+  client.uppercaseCooldowns ||
+  new Map();
+
+client.uppercaseCooldowns =
+  uppercaseCooldowns;
+
 const lastReply =
   channelCooldowns.get(message.channel.id);
+
+const lastUppercaseReply =
+  uppercaseCooldowns.get(message.channel.id);
 
 const now = Date.now();
 
@@ -92,6 +102,11 @@ const onCooldown =
   lastReply &&
   now - lastReply <
     loreConfig.channelCooldown;
+
+const onUppercaseCooldown =
+  lastUppercaseReply &&
+  now - lastUppercaseReply <
+    loreConfig.uppercaseCooldown;
 
     const channelName =
   message.channel.name;
@@ -276,7 +291,7 @@ if (!triggered) {
 }
 
   // ===== Uppercase Detector =====
-  if (!triggered) {
+  if (!triggered && !onUppercaseCooldown) {
     const letters = message.content.match(/\p{L}/gu) || [];
     const uppercaseLetters = message.content.match(/\p{Lu}/gu) || [];
     const words = message.content.trim().split(/\s+/);
@@ -291,6 +306,7 @@ if (!triggered) {
       console.log("[LORE] Uppercase detected:", message.content);
       await message.reply(response);
       triggered = true;
+      uppercaseCooldowns.set(message.channel.id, now);
     }
   }
 
