@@ -17,6 +17,7 @@ const {
   continentsMap,
 } = require("../utils/roles");
 const { startReminderScheduler } = require("../scheduler/reminderScheduler");
+const { startSpontaneousScheduler } = require("../scheduler/spontaneousScheduler");
 const { buildReminderMenu } = require("../utils/ReminderMenu");
 
 module.exports = {
@@ -25,118 +26,114 @@ module.exports = {
   async execute(client) {
     console.log(`✅ Bot connecté en tant que ${client.user.tag}`);
     console.log("🚀 Starting reminder scheduler...");
-      startReminderScheduler(client);
+    startReminderScheduler(client);
+    console.log("🚀 Starting spontaneous thoughts scheduler...");
+    startSpontaneousScheduler(client);
     
 
+    const { getChannelConfig, findChannel } = require("../config/channels");
+    const config = getChannelConfig();
+
     for (const guild of client.guilds.cache.values()) {
-      const channel = guild.channels.cache.find(
-        c => c.name === "getroles" && c.isTextBased()
-      );
-      if (!channel) {
-        console.warn(`⚠️ Pas de salon #getroles trouvé dans ${guild.name}`);
-        continue;
-      }
 
-      // ===== Pronoms =====
-      let messages = await channel.messages.fetch({ limit: 50 });
-      let pronounsMsg = messages.find(m => m.content === pronounsMessage.content);
-      if (!pronounsMsg) {
-        pronounsMsg = await channel.send({ content: pronounsMessage.content });
-        console.log(`[LOG] Message pronoms créé dans ${guild.name}`);
-      }
+      // ===== 1. Salon Rôles (get-roles) =====
+      const getRolesChannel = findChannel(guild, config.channels.getRoles);
+      if (getRolesChannel) {
+        let messages = await getRolesChannel.messages.fetch({ limit: 50 });
 
-      await pronounsMsg.fetch(); // fetch toutes les réactions existantes
-      for (const emoji of Object.keys(pronounsMap)) {
-        if (!pronounsMsg.reactions.cache.has(emoji)) {
-          await pronounsMsg.react(emoji);
+        // Pronoms
+        let pronounsMsg = messages.find(m => m.content === pronounsMessage.content);
+        if (!pronounsMsg) {
+          pronounsMsg = await getRolesChannel.send({ content: pronounsMessage.content });
+          console.log(`[LOG] Message pronoms créé dans ${guild.name}`);
         }
-      }
-      // ===== Zodiac =====
-      let zodiacMsg = messages.find(m => m.content === zodiacMessage.content);
-      if (!zodiacMsg) {
-        zodiacMsg = await channel.send({ content: zodiacMessage.content });
-        console.log(`[LOG] Message zodiac créé dans ${guild.name}`);
-      }
-
-      await zodiacMsg.fetch(); // fetch toutes les réactions existantes
-      // if (zodiacMsg) await zodiacMsg.pin();
-
-      for (const emoji of Object.keys(zodiacMap)) {
-        if (!zodiacMsg.reactions.cache.has(emoji)) {
-          await zodiacMsg.react(emoji);
+        await pronounsMsg.fetch();
+        for (const emoji of Object.keys(pronounsMap)) {
+          if (!pronounsMsg.reactions.cache.has(emoji)) {
+            await pronounsMsg.react(emoji);
+          }
         }
+
+        // Zodiac
+        let zodiacMsg = messages.find(m => m.content === zodiacMessage.content);
+        if (!zodiacMsg) {
+          zodiacMsg = await getRolesChannel.send({ content: zodiacMessage.content });
+          console.log(`[LOG] Message zodiac créé dans ${guild.name}`);
+        }
+        await zodiacMsg.fetch();
+        for (const emoji of Object.keys(zodiacMap)) {
+          if (!zodiacMsg.reactions.cache.has(emoji)) {
+            await zodiacMsg.react(emoji);
+          }
+        }
+
+        // Continents
+        let continentsMsg = messages.find(m => m.content === continentsMessage.content);
+        if (!continentsMsg) {
+          continentsMsg = await getRolesChannel.send({ content: continentsMessage.content });
+          console.log(`[LOG] Message continents créé dans ${guild.name}`);
+        }
+        await continentsMsg.fetch();
+        for (const emoji of Object.keys(continentsMap)) {
+          const roleExists = guild.roles.cache.find(r => r.name === continentsMap[emoji]);
+          if (!roleExists) {
+            console.warn(`⚠️ Le rôle ${continentsMap[emoji]} n'existe pas dans ${guild.name}`);
+            continue;
+          }
+          if (!continentsMsg.reactions.cache.has(emoji)) {
+            await continentsMsg.react(emoji);
+          }
+        }
+      } else {
+        console.warn(`⚠️ Pas de salon #get-roles trouvé dans ${guild.name}`);
       }
-      // ===== Continents =====
-let continentsMsg = messages.find(m => m.content === continentsMessage.content);
 
-if (!continentsMsg) {
-  continentsMsg = await channel.send({ content: continentsMessage.content });
-  console.log(`[LOG] Message continents créé dans ${guild.name}`);
-}
+      // ===== 2. Salon Reminders =====
+      const remindersChannel = findChannel(guild, config.channels.reminders);
+      if (remindersChannel) {
+        const reminderMessages = await remindersChannel.messages.fetch({ limit: 20 });
+        let reminderMsg = reminderMessages.find(
+          m => m.author.id === client.user.id && m.components.length > 0
+        );
 
-await continentsMsg.fetch();
+        if (!reminderMsg) {
+          const reminderMenu = buildReminderMenu();
+          reminderMsg = await remindersChannel.send({
+            content: "⏰ Select your active reminder times (UTC):",
+            components: reminderMenu
+          });
+          console.log(`[LOG] Message reminders créé dans ${guild.name}`);
+        }
+      } else {
+        console.warn(`⚠️ Pas de salon #reminders trouvé dans ${guild.name}`);
+      }
 
-for (const emoji of Object.keys(continentsMap)) {
-  const roleExists = guild.roles.cache.find(r => r.name === continentsMap[emoji]);
-  if (!roleExists) {
-    console.warn(`⚠️ Le rôle ${continentsMap[emoji]} n'existe pas dans ${guild.name}`);
-    continue;
-  }
+      // ===== 3. Salon Règlement (rules) =====
+      const rulesChannel = findChannel(guild, config.channels.rules);
+      if (rulesChannel) {
+        const rulesMessages = await rulesChannel.messages.fetch({ limit: 20 });
+        const onboardingText =
+          "Please click the button below to accept the rules and gain access to the server!";
 
-  if (!continentsMsg.reactions.cache.has(emoji)) {
-    await continentsMsg.react(emoji);
-  }
-}
-// ===== Reminder Channel =====
-const reminderMessages = await channel.messages.fetch({ limit: 20 });
+        let onboardingMsg = rulesMessages.find(m => m.content === onboardingText);
+        if (!onboardingMsg) {
+          const row = new ActionRowBuilder().addComponents(
+            new ButtonBuilder()
+              .setCustomId("accept-rules")
+              .setLabel("Accept Rules")
+              .setEmoji("✅")
+              .setStyle(ButtonStyle.Success)
+          );
 
-let reminderMsg = reminderMessages.find(
-  m =>
-    m.author.id === client.user.id &&
-    m.components.length > 0
-);
-
-if (!reminderMsg) {
-
-  const reminderMenu = buildReminderMenu();
-
-  reminderMsg = await channel.send({
-    content: "⏰ Select your active reminder times (UTC):",
-    components: reminderMenu
-  });
-
-  console.log(`[LOG] Message reminders créé dans ${guild.name}`);
-}
-// ===== Onboarding =====
-// ===== Onboarding =====
-
-const onboardingText =
-  "Please click the button below to accept the rules and gain access to the server!";
-
-let onboardingMsg = reminderMessages.find(
-  m => m.content === onboardingText
-);
-
-if (!onboardingMsg) {
-
-  const row = new ActionRowBuilder()
-    .addComponents(
-      new ButtonBuilder()
-        .setCustomId("accept-rules")
-        .setLabel("Accept Rules")
-        .setEmoji("✅")
-        .setStyle(ButtonStyle.Success)
-    );
-
-  onboardingMsg = await channel.send({
-    content: onboardingText,
-    components: [row]
-  });
-
-  console.log(
-    `[LOG] Message onboarding créé dans ${guild.name}`
-  );
-}
+          onboardingMsg = await rulesChannel.send({
+            content: onboardingText,
+            components: [row]
+          });
+          console.log(`[LOG] Message onboarding créé dans ${guild.name}`);
+        }
+      } else {
+        console.warn(`⚠️ Pas de salon #rules trouvé dans ${guild.name}`);
+      }
     }
 
   },

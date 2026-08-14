@@ -55,9 +55,10 @@ function startReminderScheduler(client) {
           continue;
         }
 
-        const reminderChannel = guild.channels.cache.find(
-          c => c.name === "général" && c.isTextBased()
-        );
+        const { getChannelConfig, findChannel } = require("../config/channels");
+        const config = getChannelConfig();
+
+        const reminderChannel = findChannel(guild, config.channels.reminders);
 
         if (!reminderChannel) {
           console.log("❌ Reminder channel not found");

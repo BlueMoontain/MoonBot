@@ -52,11 +52,13 @@ const loreMessages = {
 
   "I wonder if I can ascend if I sell all the souls in this server...",
 
-  "Someone told me to open an 'OnlyFangs'... I wonder what that means?",
+  'Someone told me to open an "OnlyFangs"... I wonder what that means ?',
+
+  "The moon is beautiful tonight. A shame I have to enjoy it all by myself... And no, for the record, I was not thinking about anyone in this server. I mean, can you imagine ? Ha ! Ugh, no.",
 
   "Looking fabulous today. Yes, I am talking about myself, of course. Who else?",
 
-  "I am currently reading some fanfictions people wrote about me. It's... imaginative, to say the least.",
+  'I am currently reading some "fanfictions" people wrote about me. It\'s... imaginative, to say the least.',
 
   "Do you think Strahd has his own discord server ? I should move there..." ,
   
@@ -164,7 +166,7 @@ const easterEggs = {
     },
 
     art: {
-      probability: 0.05,
+      probability: 0.3,
 
       responses: [
         "Good. Create something worthy tonight.",
@@ -173,7 +175,7 @@ const easterEggs = {
     },
 
     tired: {
-      probability: 1,
+      probability: 0.1,
       // 0.06
 
       responses: [
@@ -296,13 +298,15 @@ pookie: {
 
     "Fawning over me again, Darling ?", 
 
-"Yes, yes, I'm right here, love.",
+    "Yes, yes, I'm right here, love.",
 
-"* blushes *",
+    "* blushes *",
 
-"Cheeky little pup.",
+    "I'm all pointy ears, my love.",
 
-"Precious little Bhaal-babe",
+    "Cheeky little pup.",
+
+    "Precious little Bhaal-babe"
 
   ]
 },
@@ -313,17 +317,19 @@ tit : {probability: 0.5,
 
     "Ah, yes. Your favorite subject.", 
 
-"This server is full of weirdos !",
+    "This server is full of weirdos !",
 
-"I should go back to Faerûn. Or Bolivia. Anywhere else.",
+    "I should go back to Faerûn. Or Bolivia. Anywhere else.",
 
-"* sigh *.",
+    "* sigh *.",
 
-"I should be accustomed to all kind of deviancy, but this is too much, even for me.",
+    "Really ? I mean yes, but really ?!",
 
-"I thought I've seen everything, but you manage to surprise me every time. And no, that is not a compliment, my dear.",
+    "I should be accustomed to all kind of deviancy, but this is too much, even for me.",
 
-"You couldn't wait 10 seconds before being an absolute freak."
+    "I thought I've seen everything, but you manage to surprise me every time. And no, that is not a compliment, my dear.",
+
+    "You couldn't wait 10 seconds before being an absolute freak."
 
   ]
 },
@@ -333,17 +339,42 @@ tits : {probability: 0.5,
 
     "Ah, yes. Your favorite subject.", 
 
-"This server is full of weirdos !",
+    "This server is full of weirdos !",
 
-"I should go back to Faerûn. Or Bolivia. Anywhere else.",
+    "I should go back to Faerûn. Or Bolivia. Anywhere else.",
 
-"* sigh *.",
+    "* sigh *.",
 
-"I should be accustomed to all kind of deviancy, but this is too much, even for me.",
+    "Really ? I mean yes, but really ?!",
 
-"I thought I've seen everything, but you manage to surprise me every time. And no, that is not a compliment, my dear.",
+    "I should be accustomed to all kind of deviancy, but this is too much, even for me.",
 
-"You couldn't wait 10 seconds before being an absolute freak."
+    "I thought I've seen everything, but you manage to surprise me every time. And no, that is not a compliment, my dear.",
+
+    "You couldn't wait 10 seconds before being an absolute freak."
+
+  ]
+},
+
+titties : {probability: 0.5,
+
+  responses: [
+
+    "Ah, yes. Your favorite subject.",
+
+    "This server is full of weirdos !",
+
+    "I should go back to Faerûn. Or Bolivia. Anywhere else.",
+
+    "* sigh *.",
+
+    "Really ? I mean yes, but really ?!",
+
+    "I should be accustomed to all kind of deviancy, but this is too much, even for me.",
+
+    "I thought I've seen everything, but you manage to surprise me every time. And no, that is not a compliment, my dear.",
+
+    "You couldn't wait 10 seconds before being an absolute freak."
 
   ]
 },
@@ -352,59 +383,136 @@ peepee : {probability: 0.5,
 
   responses: [
 
-    "Ah, yes. Your favorite subject.", 
+    "Ah, yes. Your favorite subject.",
 
-"This server is full of weirdos !",
+    "This server is full of weirdos !",
 
-"I should go back to Faerûn. Or Bolivia. Anywhere else.",
+    "I should go back to Faerûn. Or Bolivia. Anywhere else.",
 
-"* sigh *.",
+    "* sigh *.",
 
-"I should be accustomed to all kind of deviancy, but this is too much, even for me.",
+    "Really ? I mean yes, but really ?!",
 
-"I thought I've seen everything, but you manage to surprise me every time. And no, that is not a compliment, my dear.",
+    "I should be accustomed to all kind of deviancy, but this is too much, even for me.",
 
-"You couldn't wait 10 seconds before being an absolute freak."
+    "I thought I've seen everything, but you manage to surprise me every time. And no, that is not a compliment, my dear.",
+
+    "You couldn't wait 10 seconds before being an absolute freak."
 
   ]
   },
+
+pp : {probability: 0.5,
+
+  responses: [
+
+    "Ah, yes. Your favorite subject.",
+
+    "This server is full of weirdos !",
+
+    "I should go back to Faerûn. Or Bolivia. Anywhere else.",
+
+    "* sigh *.",
+
+    "Really ? I mean yes, but really ?!",
+
+    "I should be accustomed to all kind of deviancy, but this is too much, even for me.",
+
+    "I thought I've seen everything, but you manage to surprise me every time. And no, that is not a compliment, my dear.",
+
+    "You couldn't wait 10 seconds before being an absolute freak."
+
+  ]
+  },
+
 dick : {probability: 0.5,
+
+  responses: [
+
+    "Ah, yes. Your favorite subject.",
+
+    "This server is full of weirdos !",
+
+    "I should go back to Faerûn. Or Bolivia. Anywhere else.",
+
+    "* sigh *.",
+
+    "Really ? I mean yes, but really ?!",
+
+    "I should be accustomed to all kind of deviancy, but this is too much, even for me.",
+
+    "I thought I've seen everything, but you manage to surprise me every time. And no, that is not a compliment, my dear.",
+
+    "You couldn't wait 10 seconds before being an absolute freak."
+
+  ]
+  },
+
+cock : {probability: 0.5,
+
+  responses: [
+
+    "Ah, yes. Your favorite subject.",
+
+    "This server is full of weirdos !",
+
+    "I should go back to Faerûn. Or Bolivia. Anywhere else.",
+
+    "* sigh *.",
+
+    "Really ? I mean yes, but really ?!",
+
+    "I should be accustomed to all kind of deviancy, but this is too much, even for me.",
+
+    "I thought I've seen everything, but you manage to surprise me every time. And no, that is not a compliment, my dear.",
+
+    "You couldn't wait 10 seconds before being an absolute freak."
+
+  ]
+  },
+
+ass : {probability: 0.5,
 
   responses: [
 
     "Ah, yes. Your favorite subject.", 
 
-"This server is full of weirdos !",
+    "This server is full of weirdos !",
 
-"I should go back to Faerûn. Or Bolivia. Anywhere else.",
+    "I should go back to Faerûn. Or Bolivia. Anywhere else.",
 
-"* sigh *.",
+    "* sigh *.",
 
-"I should be accustomed to all kind of deviancy, but this is too much, even for me.",
+    "Really ? I mean yes, but really ?!",
 
-"I thought I've seen everything, but you manage to surprise me every time. And no, that is not a compliment, my dear.",
+    "I should be accustomed to all kind of deviancy, but this is too much, even for me.",
 
-"You couldn't wait 10 seconds before being an absolute freak."
+    "I thought I've seen everything, but you manage to surprise me every time. And no, that is not a compliment, my dear.",
+
+    "You couldn't wait 10 seconds before being an absolute freak."
 
   ] 
   },
+
 schlong  : {probability: 0.5,
 
   responses: [
 
     "Ah, yes. Your favorite subject.", 
 
-"This server is full of weirdos !",
+    "This server is full of weirdos !",
 
-"I should go back to Faerûn. Or Bolivia. Anywhere else.",
+    "I should go back to Faerûn. Or Bolivia. Anywhere else.",
 
-"* sigh *.",
+    "* sigh *.",
 
-"I should be accustomed to all kind of deviancy, but this is too much, even for me.",
+    "Really ? I mean yes, but really ?!",
 
-"I thought I've seen everything, but you manage to surprise me every time. And no, that is not a compliment, my dear.",
+    "I should be accustomed to all kind of deviancy, but this is too much, even for me.",
 
-"You couldn't wait 10 seconds before being an absolute freak."
+    "I thought I've seen everything, but you manage to surprise me every time. And no, that is not a compliment, my dear.",
+
+    "You couldn't wait 10 seconds before being an absolute freak."
 
   ]
 },

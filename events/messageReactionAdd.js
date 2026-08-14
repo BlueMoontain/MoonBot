@@ -28,11 +28,13 @@ console.log(
       const member = await reaction.message.guild.members.fetch(user.id);
       await member.fetch(true);
 
+const { isChannelMatch, getChannelConfig } = require("../config/channels");
+const config = getChannelConfig();
+
 // ===== Rules Verification =====
 
 if (
-  reaction.message.channel.name ===
-    "rules-📘" &&
+  isChannelMatch(reaction.message.channel, config.channels.rules) &&
   emoji === "✅"
 ) {
 

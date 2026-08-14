@@ -108,22 +108,27 @@ const onUppercaseCooldown =
   now - lastUppercaseReply <
     loreConfig.uppercaseCooldown;
 
-    const channelName =
-  message.channel.name;
+const { getChannelConfig, isChannelMatch, findChannel, isGeneralLoreAllowed } = require("../config/channels");
+const config = getChannelConfig();
 
-  const isVentingChannel =
-  loreChannels.venting.includes(
-    channelName
-  );
+    const isVentingChannel = isChannelMatch(message.channel, config.channels.venting);
+    const isDailyPostChannel = isChannelMatch(message.channel, config.channels.dailyPost);
+    const generalLoreAllowed = isGeneralLoreAllowed(message.channel);
 
-const loreDisabled =
-  loreChannels.disabled.includes(
-    channelName
-  );
+    // ===== Daily Post Handling =====
+    if (isDailyPostChannel) {
+      console.log(`[DAILY POST] Detected post in ${message.channel.name} by ${message.author.tag}`);
+      const reactChannel = findChannel(message.guild, config.channels.dailyPostReact);
+      if (reactChannel) {
+        // En préparation pour la réponse future dans dailyPostReact (sans jamais parler dans dailyPost)
+        console.log(`[DAILY POST] Target reaction channel: ${reactChannel.name}`);
+      }
+      return;
+    }
 
 if (!message.content.startsWith(prefix) &&
     !onCooldown && 
-    !loreDisabled) {
+    generalLoreAllowed) {
 
   let triggered = false;
 
@@ -317,35 +322,6 @@ if (!triggered) {
       triggered = true;
       uppercaseCooldowns.set(message.channel.id, now);
     }
-  }
-
-  // ===== Random Thoughts =====
-  if (
-    !triggered &&
-    Math.random() <
-      loreConfig.randomThoughtChance
-  ) {
-const useRareThought =
-  Math.random() < 0.1;
-
-const responses =
-  useRareThought
-    ? loreMessages.rareThoughts
-    : loreMessages.randomThoughts;
-
-    const response =
-      responses[
-        Math.floor(
-          Math.random() *
-          responses.length
-        )
-      ];
-console.log(
-  "[LORE] Random thought triggered"
-);
-    await message.reply(response);
-
-    triggered = true;
   }
 
   if (triggered) {
