@@ -187,8 +187,17 @@ if (
         easterEggs.keywords
       )) {
 
+      const escapedKeyword =
+        keyword.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+
+      const keywordRegex =
+        new RegExp(
+          `(?:^|[^\\p{L}])${escapedKeyword}(?:$|[^\\p{L}])`,
+          "iu"
+        );
+
       if (
-        content.includes(keyword) &&
+        keywordRegex.test(message.content) &&
         Math.random() < data.probability
       ) {
 
